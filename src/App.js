@@ -4,6 +4,8 @@ import Index from './pages/Index';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ErrorPage from './pages/ErrorPage';
+import AdminRoutes from './middlewares/AdminRoutes';
+import AdminPage from './pages/admin/AdminPage';
 
 function App() {
   return (
@@ -12,7 +14,10 @@ function App() {
         <Route exact path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path='*' element={<ErrorPage />} />
+        <Route element={<AdminRoutes />}>
+          <Route path="/admin" element={<AdminPage />} />
+        </Route>
+        <Route path='*' element={<ErrorPage />} /> 
       </Routes>
     </BrowserRouter>
   );
