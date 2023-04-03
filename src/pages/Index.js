@@ -6,8 +6,12 @@ const Index = () => {
   return (
     <>
     <Navbar />
-
-    <div>Index</div>
+    
+    <main className='bg-white'>
+      <div className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+        Hello to capstone site
+      </div>
+    </main>
 
     <Footer />
     </>

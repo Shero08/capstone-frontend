@@ -7,9 +7,9 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)  
 
   return (
-    <header className="bg-white">
+    <header className="bg-white lg:shadow sticky top-0">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-            <div className='flex lg:flex-1'>
+            <div className='flex '>
                 <Link to='/'>
                     <h1>Capstone Logo</h1>
                 </Link>
@@ -26,23 +26,23 @@ const Navbar = () => {
                 </button>
             </div>
 
-            <Popover.Group className="hidden lg:flex lg:gap-x-12">
+            <Popover.Group className="hidden lg:flex lg:ml-6 lg:gap-x-12">
                 <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
-                    Features
+                    Home
                 </Link>
                 <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
-                    Marketplace
+                    Servizi
                 </Link>
                 <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
-                    Company
+                    Contatti
                 </Link>
             </Popover.Group>
 
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
+                <Link to='/login' className="text-sm font-semibold leading-6 text-gray-900 mr-3">
                     Login
                 </Link>
-                <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
+                <Link to='/signup' className="text-sm font-semibold leading-6 text-gray-900">
                     Sign up
                 </Link>
             </div>
@@ -73,25 +73,30 @@ const Navbar = () => {
                             <Link to='/'
                             className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                             >
-                            Features
+                                Home
                             </Link>
                             <Link to='/'
                             className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                             >
-                            Marketplace
+                                Servizi
                             </Link>
                             <Link to='/'
                             className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                             >
-                            Company
+                                Contatti
                             </Link>
                         </div>
 
                     <div className="py-6">
-                        <Link to='/'
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                        <Link to='/login'
+                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                         >
-                        Log in
+                            Login
+                        </Link>
+                        <Link to='/signup' 
+                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                        >
+                            Sign up
                         </Link>
                     </div>
                     </div>
