@@ -5,7 +5,9 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ErrorPage from './pages/ErrorPage';
 import AdminRoutes from './middlewares/AdminRoutes';
-import AdminPage from './pages/admin/AdminPage';
+import ProtectedRoutes from './middlewares/ProtectedRoutes';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import UserDashboard from './pages/user/UserDashboard';
 
 function App() {
 
@@ -16,7 +18,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route element={<AdminRoutes />}>
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/dashboard" element={<UserDashboard />} />
         </Route>
         <Route path='*' element={<ErrorPage />} /> 
       </Routes>

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import usePostLogin from "../hooks/usePostLogin";
 import { Toaster } from 'react-hot-toast';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 
 const Login = () => {
   const [formData, setFormData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const { data, error, post } = usePostLogin({ url: `${process.env.REACT_APP_API_URL}/login`, headers: {
     "Content-Type": "application/json"
@@ -18,6 +20,10 @@ const Login = () => {
     if(error){
       console.log(error)
     }
+  }
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   }
 
   return (
@@ -34,8 +40,10 @@ const Login = () => {
                 <input 
                   type="email" 
                   name="email" 
+                  autoComplete="email"
                   id="user-email" 
                   placeholder="example@domainmail.com" 
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                   onChange={(e) =>
                     setFormData({
@@ -48,11 +56,13 @@ const Login = () => {
             </div>
 
             <div className="col-span-full">
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input 
-                  type="password" 
+                  type={!showPassword ? 'password' : 'text'}
                   name="password" 
                   id="user-password" 
+                  required
+                  placeholder='Inserisci password'
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                   onChange={(e) =>
                     setFormData({
@@ -61,6 +71,17 @@ const Login = () => {
                     })
                   }
                 />
+
+                <div
+                  className="icon_button absolute right-4 top-0 py-1.5"
+                  onClick={handleClickShowPassword}
+                >
+                  {!showPassword ? (
+                    <EyeIcon className="h-6 font-extralight" />
+                  ) : (
+                    <EyeSlashIcon className="h-6 font-extralight" />
+                  )}
+                </div>
               </div>
             </div>
 

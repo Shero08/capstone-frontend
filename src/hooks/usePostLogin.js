@@ -25,7 +25,7 @@ const usePostLogin = ({ url, headers }) => {
 
           decoded.role === 'admin' 
           ? navigate('/admin', { replace: true })
-          : navigate('/signup', { replace: true })
+          : navigate('/dashboard', { replace: true })
         }
       })
       .catch(() => {
