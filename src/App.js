@@ -8,6 +8,7 @@ import AdminRoutes from './middlewares/AdminRoutes';
 import AdminPage from './pages/admin/AdminPage';
 
 function App() {
+
   return (
     <BrowserRouter>
       <Routes>

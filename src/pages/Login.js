@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import usePostLogin from "../hooks/usePostLogin";
+import { Toaster } from 'react-hot-toast';
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -20,9 +21,10 @@ const Login = () => {
   }
 
   return (
-    <div className='container'>
-      <div>
-        <h1>Pagina Login</h1>
+    <div className='w-full h-screen flex items-center bg-gray-200'>
+      <div className='mx-auto w-3/4 lg:w-1/4 bg-white rounded-md p-3 shadow-lg'>
+        <h2>Ciao, sei già registrato?</h2>
+        <h1>Accedi al tuo account</h1>
 
         <form onSubmit={handleLogin}>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -62,20 +64,30 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="mt-6 flex items-center justify-end gap-x-6">
+            <div className="mt-6">
               <button 
                 type="submit" 
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                  Save
+                  Accedi
               </button>
             </div>
 
           </div>
         </form>
+
+        <Link to='/signup'>Registrati</Link>
       </div>
 
-      <Link to='/signup'>Registrati</Link>
+
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          className: '',
+          duration: 9000
+        }}
+      />
     </div> 
   )
 }
