@@ -7,6 +7,7 @@ import ErrorPage from './pages/ErrorPage';
 import AdminRoutes from './middlewares/AdminRoutes';
 import ProtectedRoutes from './middlewares/ProtectedRoutes';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import UserList from './pages/admin/UserList';
 import UserDashboard from './pages/user/UserDashboard';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route element={<AdminRoutes />}>
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/user" element={<UserList />} />
         </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="/dashboard" element={<UserDashboard />} />

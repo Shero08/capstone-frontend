@@ -2,13 +2,21 @@ import React, {useState} from 'react';
 import { Bars3Icon, UserCircleIcon, HomeIcon, InboxStackIcon, ArrowLeftOnRectangleIcon, UserIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import useSession from "../hooks/useSession";
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true)
   const session = useSession()
 
+  const handleLogout = () => {
+    localStorage.clear();
+
+    navigate('/', { replace: true })
+  }
+
   return (
-    <aside className={`${open ? 'w-72': 'w-20'} duration-300 h-screen p-5 pt-8 bg-gray-800 text-white md:relative fixed`}>
+    <aside className={`${open ? 'w-72': 'w-20'} duration-300 h-screen p-5 pt-8 bg-gray-800 text-white md:relative fixed z-50`}>
         <button
             type='button'
             className=''
@@ -36,7 +44,7 @@ const Sidebar = () => {
 
             {session?.role === 'admin' &&
             <li className='text-xl font-medium p-2 hover:bg-opacity-25 hover:bg-gray-200 rounded-md duration-150 mb-3'>
-                <Link to='#' className='flex items-center gap-x-4'>
+                <Link to='/admin/user' className='flex items-center gap-x-4'>
                     <UserIcon className='w-6 ' /> 
                     <span className={`${!open && 'hidden'} origin-left duration-200`}>Utenti</span>
                 </Link>
@@ -50,10 +58,13 @@ const Sidebar = () => {
                 </Link>
             </li>
             <li className='text-xl font-medium p-2 hover:bg-opacity-25 hover:bg-gray-200 rounded-md duration-150 mb-3'>
-                <Link to='#' className='flex items-center gap-x-4'>
+                <button 
+                    className='flex items-center gap-x-4'
+                    onClick={handleLogout}
+                >
                     <ArrowLeftOnRectangleIcon className='w-6 ' /> 
                     <span className={`${!open && 'hidden'} origin-left duration-200`}>Esci</span>
-                </Link>
+                </button>
             </li>
         </ul>
     </aside>
