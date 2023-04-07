@@ -1,18 +1,29 @@
 import React from 'react';
 import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import UpdateUserModal from './UpdateUserModal';
+import { Toaster } from 'react-hot-toast';
+import UpdateUserModal from './UpdateUserModal'; 
+import DeleteUserModal from './DeleteUserModal';
 
 const SingleUserRow = (props) => {
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
-  const {name, surname, nickname, email, birth, avatar, isActive, role, _id} = props
+  const [isOpenDelete, setIsOpenDelete] = useState(false)
+  const {name, surname, nickname, email, birth, avatar, isActive, role, _id} = props;
 
   const openUpdateModal = () => {
     setIsOpenUpdate(true)
   }
 
+  const openDeleteModal = () => {
+    setIsOpenDelete(true)
+  }
+
   const closeUpdateModal = () => {
     setIsOpenUpdate(false)
+  }
+
+  const closeDeleteModal = () => {
+    setIsOpenDelete(false)
   }
 
   return (
@@ -49,16 +60,16 @@ const SingleUserRow = (props) => {
             <td className="px-6 py-4">
                 <div className="flex justify-end gap-4">
                     <button 
-                        x-data="{ tooltip: 'Delete' }"
-                        onClick={openUpdateModal}
-                    >
-                        <TrashIcon className='w-6' />
-                    </button>
-                    <button 
                         x-data="{ tooltip: 'Edite' }"
                         onClick={openUpdateModal}
                     >
                         <PencilIcon className='w-6' />
+                    </button>
+                    <button 
+                        x-data="{ tooltip: 'Delete' }"
+                        onClick={openDeleteModal}
+                    >
+                        <TrashIcon className='w-6' />
                     </button>
                 </div>
             </td>
@@ -77,6 +88,34 @@ const SingleUserRow = (props) => {
                     isActive={isActive}
                     role={role}
                     birth={birth}
+                    id={_id}
+                />
+            </td>
+
+            <td>
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                    toastOptions={{
+                        className: '',
+                        duration: 5000,
+                        success: {
+                            style: {
+                            background: 'green',
+                            color: 'white'
+                            },
+                        }
+                    }}
+                />
+            </td>
+
+            <td>
+                <DeleteUserModal 
+                    isOpenDelete={isOpenDelete}
+                    openDeleteModal={openDeleteModal}
+                    closeDeleteModal={closeDeleteModal}
+                    name={name}
+                    surname={surname}
                     id={_id}
                 />
             </td>

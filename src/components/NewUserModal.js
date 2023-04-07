@@ -1,17 +1,17 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
+import usePostAxios from '../hooks/usePostAxios';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import usePatchAxios from '../hooks/usePatchAxios';
 
-const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickname, email, isActive, role, birth, id }) => {
+const NewUserModal = ({ isOpenModalNewUser, closeModalNewUser }) => {
   const toast = new HotToast();
   const [formData, setFormData] = useState({});
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { data, error, patch } = usePatchAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {
+  const { data, error, post } = usePostAxios({ url: `${process.env.REACT_APP_API_URL}/users`, headers: {
     "Content-Type": "application/json"
   }});
   
@@ -37,8 +37,8 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
 
     setFormData( updatedFormData );
 
-    patch(updatedFormData).then(() => {
-        closeUpdateModal()
+    post(updatedFormData).then(() => {
+        closeModalNewUser()
     });
 
     if(error){
@@ -52,8 +52,8 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
 
   return (
     <>
-        <Transition appear show={isOpenUpdate} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeUpdateModal}>
+        <Transition appear show={isOpenModalNewUser} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeModalNewUser}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -82,7 +82,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                             as="h3"
                             className="text-lg font-medium leading-6 text-gray-900"
                         >
-                            Modifica utente: {name} {surname}
+                            Inserisci nuovo utente:
                         </Dialog.Title>
                         <form className="mt-2" onSubmit={handleUpdate}>
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
@@ -92,8 +92,8 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                     <input 
                                         type="text" 
                                         name="name" 
-                                        id="user-name" 
-                                        defaultValue={name} 
+                                        id="user-name"
+                                        placeholder='Mario'
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
@@ -112,7 +112,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                         type="text" 
                                         name="surname" 
                                         id="user-surname" 
-                                        defaultValue={surname}
+                                        placeholder='Rossi'
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
@@ -131,7 +131,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                         type="text" 
                                         name="nickname" 
                                         id="user-nickname" 
-                                        defaultValue={nickname}
+                                        placeholder='Nickname'
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
@@ -150,7 +150,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                         type="date" 
                                         name="birth" 
                                         id="user-birth" 
-                                        defaultValue={birth}
+                                        placeholder='gg/mm/aaaa'
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
@@ -169,7 +169,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                         type="email" 
                                         name="email" 
                                         id="user-email" 
-                                        defaultValue={email}
+                                        placeholder='youremail@example.com'
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
@@ -188,7 +188,8 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                         type={!showPassword ? 'password' : 'text'}
                                         name="password" 
                                         id="user-password" 
-                                        placeholder="Modifica password" 
+                                        required
+                                        placeholder="Inserisci password" 
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
                                             setPassword( e.target.value )
@@ -214,6 +215,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                         type="password" 
                                         name="confirmPassword" 
                                         id="confirm-password" 
+                                        required
                                         placeholder="Conferma password"
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
@@ -239,8 +241,8 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                             })
                                         }
                                     >
-                                        <option>{role}</option>
-                                        <option>{role === 'admin' ? 'user' : 'admin'}</option>
+                                        <option>admin</option>
+                                        <option>user</option>
                                     </select>
                                 </div>
                             </div>
@@ -253,7 +255,6 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                     <select 
                                         name="isActive" 
                                         id="user-active"
-                                        defaultValue={isActive}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
                                         onChange={(e) =>
                                             setFormData({
@@ -273,7 +274,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                             <div className="mt-6 flex items-center justify-end gap-x-6">
                                 <button 
                                     type='button'
-                                    onClick={closeUpdateModal}
+                                    onClick={closeModalNewUser}
                                     className="text-sm font-semibold leading-6 text-gray-900"
                                 >
                                     Annulla
@@ -282,7 +283,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
                                     type="submit"
                                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Modifica
+                                    Crea utente
                                 </button>
                             </div>
                         </form>
@@ -297,4 +298,4 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
   )
 }
 
-export default UpdateUserModal
+export default NewUserModal

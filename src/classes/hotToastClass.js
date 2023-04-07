@@ -28,4 +28,12 @@ export default class HotToast {
     signupErrorMail(){
         return toast.error(this.message);
     }
+
+    updateSuccess(){
+        return toast.success(this.message);
+    }
+
+    deleteSuccess(){
+        return toast.success(this.message);
+    }
 }
