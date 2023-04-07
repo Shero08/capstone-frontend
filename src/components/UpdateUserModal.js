@@ -39,6 +39,10 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
 
     patch(updatedFormData).then(() => {
         closeUpdateModal()
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000)
     });
 
     if(error){

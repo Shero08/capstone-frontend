@@ -4,10 +4,23 @@ import SingleUserRow from '../../components/SingleUserRow';
 import useAxios from '../../hooks/useAxios';
 import { UserPlusIcon } from '@heroicons/react/24/outline';
 import NewUserModal from '../../components/NewUserModal';
+import Pagination from '../../components/Pagination';
 
 const UserList = () => {
   const [isOpenModalNewUser, setIsOpenModalNewUser] = useState(false)
-  const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users`, headers: {}});
+  const [totPages, setTotPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 10;
+
+  const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users?page=${currentPage}&limit=${limit}`, headers: {}});
+
+  const handlePrevClick = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextClick = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
 
   const openModalNewUser = () => {
     setIsOpenModalNewUser(true)
@@ -18,6 +31,9 @@ const UserList = () => {
   }
 
   useEffect(() => {
+    if(data){
+        setTotPages(data.totalPages)
+      }
     console.log(data);
   }, [data])
 
@@ -30,7 +46,7 @@ const UserList = () => {
                 <div className='title font-bold text-xl'>
                     <h1>Lista degli utenti presenti sul portale:</h1>
                 </div>
-                <div className='rounded-md bg-indigo-600 text-xl px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400'>
+                <div className='rounded-md bg-indigo-600 text-xl px-4 py-2 font-semibold text-white shadow-sm hover:bg-indigo-400'>
                     <button
                         type='button'
                         onClick={openModalNewUser}
@@ -60,12 +76,24 @@ const UserList = () => {
                     </thead>
 
                     <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-                        {!loading && data && data.map((user) => (
+                        {!loading && data && data.users && data.users.map((user) => (
                         <SingleUserRow 
                             key={user._id}
                             {...user}
                         />
                         ))}
+
+                        <tr className='border-none'>
+                            <td colSpan={5} className='w-full'>
+                                <Pagination
+                                    handlePrevClick={handlePrevClick}
+                                    handleNextClick={handleNextClick}
+                                    totPages={totPages}
+                                    currentPage={currentPage}
+                                    totalDocuments={data.totalDocuments}
+                                />
+                            </td>
+                        </tr>
                     </tbody>
                     
                 </table>

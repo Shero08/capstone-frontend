@@ -7,8 +7,6 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id }) 
   const toast = new HotToast();
 
   const { deleteData, error } = useDeleteAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
-
-  console.log(id);
   
   const handleDelete = (e) => {
     e.preventDefault()
@@ -16,6 +14,10 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id }) 
     deleteData()
 
     closeDeleteModal()
+
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000)
 
     if(error){
       console.log(error)

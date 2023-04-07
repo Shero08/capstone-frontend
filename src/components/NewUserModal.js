@@ -33,12 +33,14 @@ const NewUserModal = ({ isOpenModalNewUser, closeModalNewUser }) => {
         };
     }
 
-    console.log(updatedFormData);
-
     setFormData( updatedFormData );
 
     post(updatedFormData).then(() => {
         closeModalNewUser()
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000)
     });
 
     if(error){

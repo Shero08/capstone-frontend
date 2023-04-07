@@ -29,6 +29,10 @@ export default class HotToast {
         return toast.error(this.message);
     }
 
+    postSuccess(){
+        return toast.success(this.message);
+    }
+
     updateSuccess(){
         return toast.success(this.message);
     }

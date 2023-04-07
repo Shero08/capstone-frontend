@@ -15,7 +15,7 @@ const usePatchAxios = ({ url, headers }) => {
         await axios.patch(url, patchData, { headers })
           .then((res) => {
             setData(res.data);
-            toastUpdateSuccess.updateSuccess()
+            toastUpdateSuccess.updateSuccess() 
           })
           .catch((err) => {
             toast.signupError()
