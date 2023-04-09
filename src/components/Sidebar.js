@@ -27,10 +27,16 @@ const Sidebar = () => {
 
         <div className='brand mx-auto py-3'>
             <div className='avatar flex justify-center'>
-                <UserCircleIcon className="w-20 text-gray-300" aria-hidden="true" />
+                <Link to='/profile'>
+                    {(session?.avatar) 
+                        ? <img alt='' className="w-20 text-gray-300 rounded-full" src={session.avatar} /> 
+                        : <UserCircleIcon className="w-20 text-gray-300" aria-hidden="true" />}
+                </Link>
             </div>
-            <h3 className={`origin-left font-medium text-xl text-center duration-300 ${!open && 'scale-0'}`}>
-                {session?.name} {session?.surname}
+            <h3 className={`origin-left mt-3 font-medium hover:text-white text-gray-300 text-xl text-center duration-300 ${!open && 'scale-0'}`}>
+                <Link to='/profile'>
+                    {session?.name} {session?.surname}
+                </Link>
             </h3>
         </div>
 

@@ -9,6 +9,7 @@ import ProtectedRoutes from './middlewares/ProtectedRoutes';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserList from './pages/admin/UserList';
 import UserDashboard from './pages/user/UserDashboard';
+import Profile from './pages/user/Profile';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path='*' element={<ErrorPage />} /> 
       </Routes>
