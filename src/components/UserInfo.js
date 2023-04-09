@@ -99,7 +99,7 @@ const UserInfo = () => {
 
       <form className="px-6 pb-6" onSubmit={handleUpdate}>
         <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <div className="mt-2">
               <input
                 type="text"
@@ -119,7 +119,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <div className="mt-2">
               <input
                 type="text"
@@ -139,7 +139,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <div className="mt-2">
               <input
                 type="text"
@@ -159,7 +159,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <div className="mt-2">
               <input
                 type="date"
@@ -179,7 +179,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3 lg:col-span-full">
+          <div className="col-span-full">
             <div className="mt-2">
               <input
                 type="email"
@@ -199,7 +199,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <div className="mt-2 relative">
               <input
                 type={!showPassword ? "password" : "text"}
@@ -224,7 +224,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <div className="mt-2">
               <input
                 type="password"
@@ -238,7 +238,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <label className="block text-sm font-medium leading-6 text-gray-900">
               Ruolo utente
             </label>
@@ -261,7 +261,7 @@ const UserInfo = () => {
             </div>
           </div>
 
-          <div className="col-span-3">
+          <div className="md:col-span-full lg:col-span-3">
             <label className="block text-sm font-medium leading-6 text-gray-900">
               Stato utente
             </label>
