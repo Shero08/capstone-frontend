@@ -12,17 +12,20 @@ const usePatchAxios = ({ url, headers }) => {
 
     const patch = async (patchData) => {
         setLoading(true);
-        await axios.patch(url, patchData, { headers })
+
+        try {
+          await axios.patch(url, patchData, { headers })
           .then((res) => {
             setData(res.data);
             toastUpdateSuccess.updateSuccess() 
           })
-          .catch((err) => {
-            toast.signupError()
-            
-            setError(true);
-          })
-          .finally(() => setLoading(false)); 
+          .finally(() => setLoading(false));
+        } 
+        catch (error) {
+          toast.signupError()
+
+          setError(true);
+        }
     };
 
   return { data, loading, error, patch };

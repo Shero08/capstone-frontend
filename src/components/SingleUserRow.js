@@ -24,7 +24,7 @@ const SingleUserRow = (props) => {
 
   const closeDeleteModal = () => {
     setIsOpenDelete(false)
-  }
+  } 
 
   return (
     <>

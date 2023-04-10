@@ -34,7 +34,6 @@ const UserList = () => {
     if(data){
         setTotPages(data.totalPages)
       }
-    console.log(data);
   }, [data])
 
   return (

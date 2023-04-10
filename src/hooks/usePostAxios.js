@@ -6,20 +6,25 @@ const usePostAxios = ({ url, headers }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  const toastPostSuccess = new HotToast('Nuovo inserimento avvenuto con successo.');
   
   const post = async (postData) => {
     setLoading(true);
-    await axios.post(url, postData, { headers })
+
+    try {
+      await axios.post(url, postData, { headers })
       .then((res) => {
         setData(res.data);
+        console.log(res.data.message);
+        const toastPostSuccess = new HotToast(res.data.message);
         toastPostSuccess.postSuccess()
       })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => setLoading(false)); 
+      .finally(() => setLoading(false));
+    } 
+    catch (error) {
+      const toast = new HotToast(error.response?.data.message);
+      toast.postError()
+      setError(true);
+    }
   };
   
   return { data, loading, error, post };

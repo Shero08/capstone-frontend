@@ -10,11 +10,12 @@ const usePostLogin = ({ url, headers }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const toast = new HotToast();
+  
   
   const post = async (postData) => {
     setLoading(true);
-    await axios.post(url, postData, { headers })
+    try {
+      await axios.post(url, postData, { headers })
       .then((res) => {
         const token = res.data?.token
 
@@ -28,11 +29,13 @@ const usePostLogin = ({ url, headers }) => {
           : navigate('/dashboard', { replace: true })
         }
       })
-      .catch(() => {
-        toast.loginError()
-        setError(true);
-      })
-      .finally(() => setLoading(false)); 
+      .finally(() => setLoading(false));
+    } 
+    catch (error) {
+      const toast = new HotToast(error.request.response);
+      toast.loginError()
+      setError(true);
+    } 
   };
   
   return { data, loading, error, post };

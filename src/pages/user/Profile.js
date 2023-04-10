@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from '../../components/Sidebar';
 import UserInfo from '../../components/UserInfo';
 import UserAvatar from '../../components/UserAvatar';
+import UserDisable from '../../components/UserDisable';
 
 const Profile = () => {
   return (
@@ -22,6 +23,12 @@ const Profile = () => {
 
               <div className="w-full bg-white border-collapse rounded-lg shadow">
                 <UserAvatar />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 mb-8 mx-5 lg:mx-8 lg:grid-cols-2">
+              <div className="w-full bg-white border-collapse rounded-lg shadow">
+                <UserDisable />
               </div>
             </div>
         </main>

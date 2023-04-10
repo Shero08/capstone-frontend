@@ -6,7 +6,7 @@ export default class HotToast {
     }
 
     loginError() {
-        return toast.error('Email o password errate.');
+        return toast.error(this.message);
     }
 
     passwordAlert(){
@@ -31,6 +31,10 @@ export default class HotToast {
 
     postSuccess(){
         return toast.success(this.message);
+    }
+
+    postError(){
+        return toast.error(this.message);
     }
 
     updateSuccess(){

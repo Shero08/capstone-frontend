@@ -5,17 +5,23 @@ const useAxios = ({ url, headers }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const getData = async () => {
+    try {
+      await axios.get(url, { headers })
+        .then((res) => {
+          setData(res.data);
+        })
+        .finally(() => setLoading(false)); 
+    } 
+    catch (error) {
+      setError(true);
+    }
+  }
   
-  useEffect(() => {
+  useEffect(() => { 
     setLoading(true);
-    axios.get(url, { headers })
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => setLoading(false)); 
+    getData();
   }, [url]);
   
   return { data, loading, error};
