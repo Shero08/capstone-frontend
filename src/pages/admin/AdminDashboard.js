@@ -6,7 +6,7 @@ const AdminDashboard = () => {
     <div className='flex bg-capstone-bg w-full'>
       <Sidebar />
 
-      <main className='flex-1 h-screen'>
+      <main className='flex-1 ml-20 lg:ml-0'>
         <div className="mt-12 lg:mx-12">
                 <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-4">
                     <div className="w-full px-4 py-5 bg-white rounded-lg shadow">

@@ -26,7 +26,7 @@ const NewUserModal = ({ isOpenModalNewUser, closeModalNewUser }) => {
 
     let updatedFormData = { ...formData };
     
-    if(password !== ''){
+    if(password !== ''){ 
         updatedFormData = {
             ...formData,
             password: password

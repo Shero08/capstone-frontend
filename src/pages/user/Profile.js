@@ -5,7 +5,7 @@ import UserAvatar from '../../components/UserAvatar';
 
 const Profile = () => {
   return (
-    <div className='flex bg-capstone-bg w-full'>
+    <div className='flex bg-capstone-bg w-full'> 
         <Sidebar />
 
         <main className='flex-1 ml-20 lg:ml-0'>

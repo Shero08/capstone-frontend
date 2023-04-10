@@ -1,49 +1,68 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import useAxios from '../hooks/useAxios';
-import usePostAxios from "../hooks/usePostAxios";
+import usePatchAvatar from "../hooks/usePatchAvatar";
 import useSession from "../hooks/useSession";
+import LoadingIndicator from '../components/LoadingIndicator';
 
 const UserAvatar = () => {
-  const [src, setSrc] = useState("");
+  const [src, setSrc] = useState('');
   const session = useSession();
-
-  const submit = async (e)=>{
-    e.preventDefault();
-        
-    let data = new FormData();
-    data.append('avatar', e.target[0].files[0]) //il primo parametro è il name che useremo nel metodo single di multer
-
-    let res = await fetch(`${process.env.REACT_APP_API_URL}/avatar`, {
-      method: 'POST',
-      body: data
-    }).then(res=>res.json())
-      console.log("RESPONSE", res);
-      setSrc(res.fileName); //aggiungere dati al backend
-  }
 
   const id = session?.id
 
-  const { data, loading, getError } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
+  const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
 
-  const { error, post } = usePostAxios({ url: `${process.env.REACT_APP_API_URL}/avatar`, headers: {
-    "Content-Type": "application/json"
+  const { patchData, patchError, patch } = usePatchAvatar({ url: `${process.env.REACT_APP_API_URL}/users/${id}/avatar`, headers: {
+    "Content-Type": "multipart/form-data"
   }});
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+        
+    const uploadData = new FormData();
+    uploadData.append('avatar', e.target[0].files[0])
      
-  useEffect(() => {
+    patch(uploadData).then(() => {
+      console.log(patchData);
+
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000)
+    });
+
+    setSrc(patchData.fileName); //aggiungere dati al backend
+    console.log(src);
+
+    if(patchError){
+      console.log(patchError)
+    }  
+  }
+     
+  useEffect(() => { 
     console.log(data);
-  }, [data])
+    console.log(patchData);
+  }, [data, patchData, src])
 
   return (
     <>
     <div className="px-6 py-5 text-md text-gray-500">Foto profilo</div>
 
     <div className="px-6 pb-6">
-      <img alt='avatar' className="w-40 text-gray-300 rounded-full mx-auto" src={data?.avatar} /> 
+      {!loading && error && (
+        <div className="mb-4 rounded-lg bg-danger-100 py-5 px-6 text-base text-danger-700" role="alert">{error}</div>
+      )}
+      {loading && <LoadingIndicator />}
+      {!loading && data &&
+        <div className="w-40 h-40 rounded-full mx-auto overflow-hidden shadow-xl">
+          <img alt='avatar' className=" text-gray-300 w-full object-cover" src={data.avatar} /> 
+        </div>
+      }
     </div>
 
     <form 
       className="px-6 pb-6"
-      onSubmit={submit} 
+      onSubmit={handleUpload} 
       encType="multipart/form-data"
     >
         <label className="block text-sm font-medium leading-6 text-gray-900">

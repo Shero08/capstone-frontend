@@ -41,7 +41,7 @@ const UserList = () => {
     <div className='flex bg-capstone-bg w-full'>
         <Sidebar />
 
-        <main className='flex-1 h-screen'>
+        <main className='flex-1 ml-20 lg:ml-0'>
             <div className='head flex justify-between items-center my-8 mx-6 px-2'>
                 <div className='title font-bold text-xl'>
                     <h1>Lista degli utenti presenti sul portale:</h1>

@@ -3,11 +3,16 @@ import { Bars3Icon, UserCircleIcon, HomeIcon, InboxStackIcon, ArrowLeftOnRectang
 import { Link } from 'react-router-dom';
 import useSession from "../hooks/useSession";
 import { useNavigate } from 'react-router-dom';
+import useAxios from '../hooks/useAxios';
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(true)
-  const session = useSession()
+  const [open, setOpen] = useState(true);
+  const session = useSession();
+
+  const id = session?.id
+
+  const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
 
   const handleLogout = () => {
     localStorage.clear();
@@ -25,17 +30,21 @@ const Sidebar = () => {
             <Bars3Icon className="h-9 w-9 text-white" aria-hidden="true" />
         </button>
 
-        <div className='brand mx-auto py-3'>
+        <div className={`brand mx-auto py-3 ${!open && 'h-12'}`}>
             <div className='avatar flex justify-center'>
                 <Link to='/profile'>
-                    {(session?.avatar) 
-                        ? <img alt='' className="w-20 text-gray-300 rounded-full" src={session.avatar} /> 
+                    {data?.avatar
+                        ? (
+                            <div className={`${open ? 'w-20 h-20': 'w-9 h-9'} rounded-full overflow-hidden duration-300`}>
+                                <img alt={data?.name} className="w-full object-cover text-gray-300" src={data?.avatar} />
+                            </div>
+                        )
                         : <UserCircleIcon className="w-20 text-gray-300" aria-hidden="true" />}
                 </Link>
             </div>
             <h3 className={`origin-left mt-3 font-medium hover:text-white text-gray-300 text-xl text-center duration-300 ${!open && 'scale-0'}`}>
                 <Link to='/profile'>
-                    {session?.name} {session?.surname}
+                    {data?.name} {data?.surname}
                 </Link>
             </h3>
         </div>
