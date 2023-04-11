@@ -67,7 +67,7 @@ const Sidebar = () => {
             }
 
             <li className='text-xl font-medium p-2 hover:bg-opacity-25 hover:bg-gray-200 rounded-md duration-150 mb-3'>
-                <Link to='#' className='flex items-center gap-x-4'>
+                <Link to='/projects' className='flex items-center gap-x-4'>
                     <InboxStackIcon className='w-6 ' /> 
                     <span className={`${!open && 'hidden'} origin-left duration-200`}>Lavori</span>
                 </Link>

@@ -10,6 +10,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import UserList from './pages/admin/UserList';
 import UserDashboard from './pages/user/UserDashboard';
 import Profile from './pages/user/Profile';
+import ProjectList from './pages/admin/ProjectList';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/projects" element={<ProjectList />} />
         </Route>
         <Route path='*' element={<ErrorPage />} /> 
       </Routes>

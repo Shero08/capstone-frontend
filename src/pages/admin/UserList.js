@@ -5,6 +5,7 @@ import useAxios from '../../hooks/useAxios';
 import { UserPlusIcon } from '@heroicons/react/24/outline';
 import NewUserModal from '../../components/NewUserModal';
 import Pagination from '../../components/Pagination';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const UserList = () => {
   const [isOpenModalNewUser, setIsOpenModalNewUser] = useState(false)
@@ -60,7 +61,7 @@ const UserList = () => {
             {!loading && error && (
                 <div className="mb-4 rounded-lg bg-danger-100 py-5 px-6 text-base text-danger-700" role="alert">{error}</div>
             )}
-            {loading && <div>Caricamento in corso...</div>}
+            {loading && <div className='mx-auto'><LoadingIndicator /></div>}
             
             <div className='overflow-hidden rounded-lg border border-gray-200 shadow-md m-6'>
                 <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
