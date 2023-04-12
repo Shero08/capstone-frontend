@@ -5,6 +5,9 @@ const useAxios = ({ url, headers }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+
+  const isRefresh = () => setRefresh(!refresh)
 
   const getData = async () => {
     try {
@@ -22,9 +25,9 @@ const useAxios = ({ url, headers }) => {
   useEffect(() => { 
     setLoading(true);
     getData();
-  }, [url]);
+  }, [url, refresh]);
   
-  return { data, loading, error};
+  return { data, loading, error, isRefresh};
 };
 
 export default useAxios;

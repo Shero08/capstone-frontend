@@ -13,7 +13,7 @@ const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 10;
 
-  const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users?page=${currentPage}&limit=${limit}`, headers: {}});
+  const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users?page=${currentPage}&limit=${limit}`, headers: {}});
 
   const handlePrevClick = () => {
     setCurrentPage((prevPage) => prevPage - 1);
@@ -34,8 +34,10 @@ const UserList = () => {
   useEffect(() => {
     if(data){
         setTotPages(data.totalPages)
-      }
+    }
   }, [data])
+
+  console.log(isRefresh);
 
   return (
     <div className='flex bg-capstone-bg w-full'>
@@ -80,6 +82,7 @@ const UserList = () => {
                         <SingleUserRow 
                             key={user._id}
                             {...user}
+                            isRefresh={isRefresh}
                         />
                         ))}
 

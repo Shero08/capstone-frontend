@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Bars3Icon, UserCircleIcon, HomeIcon, InboxStackIcon, ArrowLeftOnRectangleIcon, UserIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import useSession from "../hooks/useSession";
 import { useNavigate } from 'react-router-dom';
 import useAxios from '../hooks/useAxios';
+import useWindowSize from '../hooks/useWindowSize';
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(true);
   const session = useSession();
+  const { open, handleToggleSidebar } = useWindowSize();
 
   const id = session?.id
 
@@ -25,7 +26,7 @@ const Sidebar = () => {
         <button
             type='button'
             className=''
-            onClick={() => setOpen(!open)}
+            onClick={handleToggleSidebar}
         >
             <Bars3Icon className="h-9 w-9 text-white" aria-hidden="true" />
         </button>

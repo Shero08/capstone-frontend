@@ -4,7 +4,7 @@ import HotToast from "../classes/hotToastClass";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import usePatchAxios from '../hooks/usePatchAxios';
 
-const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickname, email, isActive, role, birth, id }) => {
+const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickname, email, isActive, role, birth, id, isRefresh }) => {
   const toast = new HotToast();
   const [formData, setFormData] = useState({});
   const [password, setPassword] = useState('');
@@ -40,9 +40,11 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
     patch(updatedFormData).then(() => {
         closeUpdateModal()
 
-        setTimeout(() => {
+        isRefresh()
+
+        /*setTimeout(() => {
             window.location.reload();
-        }, 1000)
+        }, 1000)*/
     });
 
     if(error){

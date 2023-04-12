@@ -8,7 +8,7 @@ import DeleteUserModal from './DeleteUserModal';
 const SingleUserRow = (props) => {
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
-  const {name, surname, nickname, email, birth, avatar, isActive, role, _id} = props;
+  const {name, surname, nickname, email, birth, avatar, isActive, role, _id, isRefresh} = props;
 
   const openUpdateModal = () => {
     setIsOpenUpdate(true)
@@ -89,6 +89,7 @@ const SingleUserRow = (props) => {
                     role={role}
                     birth={birth}
                     id={_id}
+                    isRefresh={isRefresh}
                 />
             </td>
 
