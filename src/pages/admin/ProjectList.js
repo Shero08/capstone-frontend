@@ -44,8 +44,15 @@ const ProjectList = () => {
 
         <main className='flex-1 ml-20 lg:ml-0'>
             <div className='head flex justify-between items-center my-8 mx-6 px-2'>
-                <div className='title font-bold text-xl'>
-                    <h1>Lista dei lavori presenti sul portale:</h1>
+                <div className='title'>
+                    <div className='flex items-center font-medium text-lg gap-x-3'>
+                      <h1>Progetti</h1>
+                      <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+                        {data.totalDocuments} Lavori totali
+                      </span>
+                    </div>
+
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Lista dei lavori presenti sul portale.</p>
                 </div>
                 <div className='rounded-md bg-indigo-600 text-xl px-4 py-2 font-semibold text-white shadow-md hover:bg-indigo-400'>
                     <button
@@ -72,6 +79,7 @@ const ProjectList = () => {
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Stato</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Autore</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Servizio</th>
+                            <th scope="col" className="px-6 py-4 font-medium text-gray-900">Editor</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900"></th>
                         </tr>
                     </thead>
@@ -86,7 +94,7 @@ const ProjectList = () => {
                         ))}
 
                         <tr className='border-none'>
-                            <td colSpan={5} className='w-full'>
+                            <td colSpan={6} className='w-full'>
                                 <Pagination
                                     handlePrevClick={handlePrevClick}
                                     handleNextClick={handleNextClick}

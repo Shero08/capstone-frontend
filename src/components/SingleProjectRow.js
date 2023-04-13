@@ -30,25 +30,24 @@ const SingleProjectRow = (props) => {
     <>
         <tr className="hover:bg-gray-50">
 
-            <th className="flex gap-3 px-6 py-4 font-normal text-gray-900">
+            <th className="px-6 py-4 font-normal text-gray-900">
                 <div className="text-sm">
                     <div className="font-medium text-gray-700">{title}</div>
                     <div className="text-gray-400">{description}</div>
                 </div>
             </th>
 
-            <td className="px-6 py-4">
-                <span
-                    className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600"
-                >
-                <span className={`h-1.5 w-1.5 rounded-full ${status ? 'bg-green-600' : 'bg-red-600'}`}></span>
+            <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                <div className={`inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ${status ? 'bg-green-600' : 'bg-red-600'}`}>
                     {status ? 'Active' : 'Disabled'}
-                </span>
+                </div>    
             </td>
+
+            <td className="px-6 py-4">{author.name} {author.surname}</td>
 
             <td className="px-6 py-4">{category}</td>
 
-            <td className="px-6 py-4">{author.name}</td>
+            <td className="px-6 py-4">{editor}</td>
 
             <td className="px-6 py-4">
                 <div className="flex justify-end gap-4">

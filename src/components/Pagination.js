@@ -29,7 +29,7 @@ const Pagination = (props) => {
             <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <div>
                     <p className="text-sm text-gray-700">
-                        Pagina {`${currentPage} di ${totPages}`} - Utenti totali {totalDocuments}
+                        Pagina {`${currentPage} di ${totPages}`} - Elementi totali {totalDocuments}
                     </p>
                 </div>
                 <div>
