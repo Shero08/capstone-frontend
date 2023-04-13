@@ -57,6 +57,7 @@ const UserDisable = () => {
         </div>
 
         <div className='px-6 pb-6'>
+            {session?.role !== 'admin' ?
             <button
                 type='button'
                 onClick={openUserDisableModal}
@@ -64,6 +65,8 @@ const UserDisable = () => {
             >
                 Elimina il tuo account
             </button>
+            : ''
+            }
         </div>
 
         <Transition appear show={openModal} as={Fragment}>
