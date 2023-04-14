@@ -1,25 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { Toaster } from 'react-hot-toast';
-import UpdateUserModal from './UpdateUserModal'; 
 import DeleteUserModal from './DeleteUserModal';
+import useSession from '../hooks/useSession';
+import { Link } from 'react-router-dom';
 
 const SingleProjectRow = (props) => {
-  const [isOpenUpdate, setIsOpenUpdate] = useState(false)
+  const session = useSession()
   const [isOpenDelete, setIsOpenDelete] = useState(false)
   const {title, description, category, author, file, status, editor, _id, isRefresh} = props;
 
-  const openUpdateModal = () => {
-    setIsOpenUpdate(true)
-  }
-
   const openDeleteModal = () => {
     setIsOpenDelete(true)
-  }
-
-  const closeUpdateModal = () => {
-    setIsOpenUpdate(false)
   }
 
   const closeDeleteModal = () => {
@@ -32,7 +25,11 @@ const SingleProjectRow = (props) => {
 
             <th className="px-6 py-4 font-normal text-gray-900">
                 <div className="text-sm">
-                    <div className="font-medium text-gray-700">{title}</div>
+                    <div className="font-medium text-gray-700">
+                        <Link to={`/projects/${_id}`}>
+                            {title}
+                        </Link>
+                    </div>
                     <div className="text-gray-400">{description}</div>
                 </div>
             </th>
@@ -49,14 +46,9 @@ const SingleProjectRow = (props) => {
 
             <td className="px-6 py-4">{editor}</td>
 
+            {session?.role === 'admin' ?
             <td className="px-6 py-4">
                 <div className="flex justify-end gap-4">
-                    <button 
-                        x-data="{ tooltip: 'Edite' }"
-                        onClick={openUpdateModal}
-                    >
-                        <PencilIcon className='w-6' />
-                    </button>
                     <button 
                         x-data="{ tooltip: 'Delete' }"
                         onClick={openDeleteModal}
@@ -65,26 +57,10 @@ const SingleProjectRow = (props) => {
                     </button>
                 </div>
             </td>
+            : ''}
         </tr>
 
         <tr className='border-none'>
-            <td>
-                <UpdateUserModal 
-                    isOpenUpdate={isOpenUpdate}
-                    openUpdateModal={openUpdateModal}
-                    closeUpdateModal={closeUpdateModal}
-                    title={title}
-                    description={description}
-                    category={category}
-                    author={author}
-                    file={file}
-                    status={status}
-                    editor={editor}
-                    id={_id}
-                    isRefresh={isRefresh}
-                />
-            </td>
-
             <td>
                 <Toaster
                     position="top-right"

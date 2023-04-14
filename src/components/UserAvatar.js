@@ -17,7 +17,7 @@ const UserAvatar = () => {
   }});
 
   const handleUpload = (e) => {
-    e.preventDefault();
+    e.preventDefault();  
         
     const uploadData = new FormData();
     uploadData.append('avatar', e.target[0].files[0])

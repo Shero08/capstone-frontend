@@ -12,6 +12,7 @@ import UserDashboard from './pages/user/UserDashboard';
 import Profile from './pages/user/Profile';
 import ProjectList from './pages/admin/ProjectList';
 import ProjectUserList from './pages/user/ProjectUserList';
+import SingleProject from './pages/user/SingleProject';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/projects" element={<ProjectUserList />} />
+          <Route path="/projects/:_id" element={<SingleProject />} />
         </Route>
         <Route path='*' element={<ErrorPage />} /> 
       </Routes>

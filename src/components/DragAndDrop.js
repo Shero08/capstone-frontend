@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const DragAndDrop = () => {
-  const [files, setFile] = useState([]);
+  const [files, setFiles] = useState([]);
   const [message, setMessage] = useState();
 
 
@@ -9,21 +9,24 @@ const DragAndDrop = () => {
     setMessage("");
     let file = e.target.files;
 
-    for (let i = 0; i < file.length; i++) {
-      const fileType = file[i]["type"];
-      const validImageTypes = ["image/gif", "image/jpeg", "image/png", "application/pdf"];
-      if (validImageTypes.includes(fileType)) {
-        setFile([...files, file[i]]);
-      } else {
-        setMessage("only images accepted"); 
-      }
+    if(file.length > 1){
+      setMessage("Puoi caricare un solo file alla volta"); 
+    }
+
+    const fileType = file[0]["type"];
+    const validImageTypes = ["image/gif", "image/jpeg", "image/png", "application/pdf", "application/msword"];
+
+    if (validImageTypes.includes(fileType)) {
+      setFiles([...files, file[0]]);
+    } else {
+      setMessage("Sono accettati solo file PDF o in Word"); 
     }
   };
 
   console.log(files);
 
   const removeImage = (i) => {
-    setFile(files.filter((x) => x.name !== i));
+    setFiles(files.filter((x) => x.name !== i));
   };
 
   return (

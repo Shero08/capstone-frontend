@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import useSession from '../../hooks/useSession';
 import DragAndDrop from '../../components/DragAndDrop';
+import NewProjectModal from '../../components/NewProjectModal';
 
 const UserDashboard = () => {
   const session = useSession();
+  const author = session?.id
+  const [isOpenModalNewProject, setIsOpenModalNewProject] = useState(false);
+
+  const openModalNewProject = () => {
+    setIsOpenModalNewProject(true)
+  }
+    
+  const closeModalNewProject = () => {
+    setIsOpenModalNewProject(false)
+  }
 
   return (
     <div className='flex bg-capstone-bg w-full'>
@@ -12,11 +23,28 @@ const UserDashboard = () => {
 
       <main className='flex-1 ml-20 lg:ml-0'>
         <div className='mt-12 lg:mx-12'>
-          <h1 className='text-center'>Ciao {session?.name} {session?.surname}</h1>
+          <h1 className='text-center font-bold text-2xl'>
+            Ciao {session?.name} {session?.surname}!
+          </h1>
 
-          <DragAndDrop />
+          <div className='w-full flex justify-center'>
+            <button
+              type='button'
+              className='mx-auto bg-indigo-600 rounded-xl text-xl font-medium text-white py-3 px-8 mt-8 shadow-md hover:bg-indigo-400'
+              onClick={openModalNewProject}
+            >
+              Nuovo Progetto
+            </button>
+          </div>
         </div>
       </main>
+
+      <NewProjectModal 
+        isOpenModalNewProject={isOpenModalNewProject}
+        openModalNewProject={openModalNewProject}
+        closeModalNewProject={closeModalNewProject}
+        author={author}
+      />
     </div>
   )
 }

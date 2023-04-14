@@ -2,12 +2,13 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import HotToast from "../classes/hotToastClass";
 import usePostAxios from "../hooks/usePostAxios";
+import DragAndDrop from "./DragAndDrop";
 
 const NewProjectModal = ({
   isOpenModalNewProject,
   closeModalNewProject,
   isRefresh,
-  author
+  author 
 }) => {
   const toast = new HotToast();
   const [formData, setFormData] = useState({category: []});
@@ -149,6 +150,12 @@ const NewProjectModal = ({
                               })
                             }
                           />
+                        </div>
+                      </div>
+
+                      <div className="col-span-full">
+                        <div className="mt-2">
+                          <DragAndDrop />
                         </div>
                       </div>
 
