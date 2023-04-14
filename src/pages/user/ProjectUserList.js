@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import useAxios from '../../hooks/useAxios';
+import useSession from '../../hooks/useSession';
 import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import SingleProjectRow from '../../components/SingleProjectRow';
 import Pagination from '../../components/Pagination';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import NewProjectModal from '../../components/NewProjectModal';
 
-const ProjectList = () => {
+const ProjectUserList = () => {
+  const session = useSession()
   const [isOpenModalNewProject, setIsOpenModalNewProject] = useState(false);
   const [totPages, setTotPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 10;
+  const author = session?.id
+  
 
-  const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects?page=${currentPage}&limit=${limit}`, headers: {}});
+  const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects?author=${author}&page=${currentPage}&limit=${limit}`, headers: {}});
 
   const handlePrevClick = () => {
     setCurrentPage((prevPage) => prevPage - 1);
@@ -36,7 +41,8 @@ const ProjectList = () => {
     }
 
     console.log(data);
-  }, [data])
+    console.log(author);
+  }, [data, author])
 
   return (
     <div className='flex bg-capstone-bg w-full'>
@@ -52,7 +58,7 @@ const ProjectList = () => {
                       </span>
                     </div>
 
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">Lista dei lavori presenti sul portale.</p>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">Lista dei miei lavori presenti sul portale.</p>
                 </div>
                 <div className='rounded-md bg-indigo-600 text-xl px-4 py-2 font-semibold text-white shadow-md hover:bg-indigo-400'>
                     <button
@@ -109,9 +115,16 @@ const ProjectList = () => {
                 </table>
             </div>
 
+            <NewProjectModal 
+                isOpenModalNewProject={isOpenModalNewProject}
+                openModalNewProject={openModalNewProject}
+                closeModalNewProject={closeModalNewProject}
+                isRefresh={isRefresh}
+                author={author}
+            />
         </main>
     </div>
   )
 }
 
-export default ProjectList
+export default ProjectUserList

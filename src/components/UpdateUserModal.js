@@ -41,10 +41,6 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
         closeUpdateModal()
 
         isRefresh()
-
-        /*setTimeout(() => {
-            window.location.reload();
-        }, 1000)*/
     });
 
     if(error){

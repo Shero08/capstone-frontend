@@ -38,8 +38,8 @@ const SingleProjectRow = (props) => {
             </th>
 
             <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                <div className={`inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ${status ? 'bg-green-600' : 'bg-red-600'}`}>
-                    {status ? 'Active' : 'Disabled'}
+                <div className={`inline px-3 py-1 text-sm font-normal rounded-full text-white gap-x-2 bg-emerald-100/60 ${status ? 'bg-green-600' : 'bg-red-600'}`}>
+                    {status}
                 </div>    
             </td>
 
