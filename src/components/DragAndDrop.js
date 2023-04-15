@@ -1,32 +1,33 @@
 import React, { useState } from "react";
 
-const DragAndDrop = () => {
-  const [files, setFiles] = useState([]);
+const DragAndDrop = ({ formData, onFormDataChange }) => {
   const [message, setMessage] = useState();
+  const [file, setFile] = useState(null);
 
 
   const handleFile = (e) => {
     setMessage("");
-    let file = e.target.files;
+    let newFile = e.target.files;
 
-    if(file.length > 1){
+    if(newFile.length > 1){
       setMessage("Puoi caricare un solo file alla volta"); 
     }
 
-    const fileType = file[0]["type"];
+    const fileType = newFile[0]["type"];
     const validImageTypes = ["image/gif", "image/jpeg", "image/png", "application/pdf", "application/msword"];
 
     if (validImageTypes.includes(fileType)) {
-      setFiles([...files, file[0]]);
+      onFormDataChange(newFile[0]);
+      setFile(newFile[0])
     } else {
       setMessage("Sono accettati solo file PDF o in Word"); 
     }
   };
 
-  console.log(files);
+  console.log(file);
 
-  const removeImage = (i) => {
-    setFiles(files.filter((x) => x.name !== i));
+  const removeImage = () => {
+    onFormDataChange(null);
   };
 
   return (
@@ -39,8 +40,8 @@ const DragAndDrop = () => {
             <input
               type="file"
               onChange={handleFile}
-              className="h-full w-full opacity-0 z-10 absolute cursor-pointer"
-              name="files[]"
+              className="h-full w-full opacity-0 z-10 absolute cursor-pointer" 
+              name="file"
             />
             <div className="h-full w-full bg-white absolute z-1 flex justify-center items-center top-0">
               <div className="flex flex-col">
@@ -50,10 +51,8 @@ const DragAndDrop = () => {
             </div>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
-            {files.map((file, key) => {
-              return (
+            {file &&
                 <div
-                  key={key}
                   className="w-full h-16 flex items-center justify-between rounded p-3 bg-white"
                 >
                   <div className="flex flex-row items-center gap-2">
@@ -75,8 +74,7 @@ const DragAndDrop = () => {
                     <i className="mdi mdi-trash-can text-white text-[14px]"></i>
                   </div>
                 </div>
-              );
-            })}
+            }
           </div>
         </div>
     </>

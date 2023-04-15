@@ -17,7 +17,7 @@ const NewProjectModal = ({
   const { data, error, post } = usePostAxios({
     url: `${process.env.REACT_APP_API_URL}/projects`,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'multipart/form-data',
     },
   });
 
@@ -34,6 +34,10 @@ const NewProjectModal = ({
     }
 
     setFormData({ ...formData, author: author, category: updatedCategory });
+  }
+
+  const handleFormDataChange = (fileData) => {
+    setFormData({ ...formData, file: fileData });
   }
 
   const handleCreate = (e) => {
@@ -53,7 +57,7 @@ const NewProjectModal = ({
   };
 
   useEffect(() => {
-    console.log(isChecked, formData, author);
+    console.log(formData);
   }, [isChecked, formData, author])
 
   return (
@@ -136,26 +140,10 @@ const NewProjectModal = ({
 
                       <div className="col-span-full">
                         <div className="mt-2">
-                          <input
-                            type="text"
-                            name="file"
-                            id="project-file"
-                            placeholder="URL file"
-                            required
-                            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                file: e.target.value,
-                              })
-                            }
+                          <DragAndDrop 
+                            formData={formData} 
+                            onFormDataChange={handleFormDataChange}
                           />
-                        </div>
-                      </div>
-
-                      <div className="col-span-full">
-                        <div className="mt-2">
-                          <DragAndDrop />
                         </div>
                       </div>
 

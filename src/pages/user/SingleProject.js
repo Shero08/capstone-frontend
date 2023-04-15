@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from '../../components/Sidebar';
 import useAxios from '../../hooks/useAxios';
 import LoadingIndicator from '../../components/LoadingIndicator'
+import SingleFile from '../../components/SingleFile';
 
 const SingleProject = () => {
   const { _id } = useParams();
@@ -15,6 +16,7 @@ const SingleProject = () => {
   const date = new Date(data.createdAt);
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   const formattedDate = date.toLocaleDateString('it-IT', options);
+  const fileName = data && data.file && data.file.filename
 
   return (
     <div className='flex bg-capstone-bg w-full'>
@@ -55,7 +57,12 @@ const SingleProject = () => {
                         </div>
 
                         <div>
-                            <div>{data.file}</div>
+                            <div>
+                              <SingleFile 
+                                fileName={fileName}
+                                id={_id}
+                              />
+                            </div>
                         </div>
                     </div>        
                     <div className='border-t border-t-gray-200 italic'>
