@@ -37,7 +37,7 @@ const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickna
 
     setFormData( updatedFormData );
 
-    patch(updatedFormData).then(() => {
+    patch(updatedFormData).then(() => { 
         closeUpdateModal()
 
         isRefresh()

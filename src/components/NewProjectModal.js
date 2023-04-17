@@ -94,14 +94,17 @@ const NewProjectModal = ({
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-lg font-bold leading-6 text-gray-900"
                   >
                     Inserisci nuovo progetto:
                   </Dialog.Title>
                   <form className="mt-2" onSubmit={handleCreate}>
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+                    <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
                       <div className="col-span-full">
                         <div className="mt-2">
+                          <label htmlFor="project-title" className="block text-sm font-medium leading-6 text-gray-900">
+                            Titolo progetto:
+                          </label>
                           <input
                             type="text"
                             name="title"
@@ -121,6 +124,9 @@ const NewProjectModal = ({
 
                       <div className="col-span-full">
                         <div className="mt-2">
+                          <label htmlFor="project-desc" className="block text-sm font-medium leading-6 text-gray-900">
+                            Descrizione progetto:
+                          </label>
                           <input
                             type="text"
                             name="description"
@@ -140,6 +146,9 @@ const NewProjectModal = ({
 
                       <div className="col-span-full">
                         <div className="mt-2">
+                          <label htmlFor="project-file" className="block text-sm font-medium leading-6 text-gray-900">
+                              Inserisci allegato:
+                          </label>
                           <DragAndDrop 
                             formData={formData} 
                             onFormDataChange={handleFormDataChange}
@@ -147,81 +156,170 @@ const NewProjectModal = ({
                         </div>
                       </div>
 
-                      <div className="col-span-full mt-3 space-y-10">
+                      <div className="col-span-full space-y-4">
                         <fieldset>
                           <legend className="text-sm font-semibold leading-6 text-gray-900">
-                            Seleziona uno o più servizi che vuoi ricevere
+                            Seleziona uno o più servizi per il tuo progetto:
                           </legend>
-                          <div className="mt-6 space-y-6">
+                          <div className="mt-3 space-y-3">
                             <div className="relative flex gap-x-3">
                               <div className="flex h-6 items-center">
                                 <input
-                                  id="comments"
-                                  name="category"
+                                  id="editing"
+                                  name="editing"
                                   type="checkbox"
-                                  value="Servizio1"
+                                  value="Editing"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
                               </div>
-                              <div className="text-sm leading-6">
+                              <div className="text-sm leading-5">
                                 <label
-                                  htmlFor="comments"
+                                  htmlFor="editing"
                                   className="font-medium text-gray-900"
                                 >
-                                  Comments
+                                  Editing
                                 </label>
                                 <p className="text-gray-500">
-                                  Get notified when someones posts a comment on
-                                  a posting.
+                                  Lavoreremo insieme a te al tuo testo, per cercare di farlo sbocciare nella sua forma migliore. 
                                 </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
                               <div className="flex h-6 items-center">
                                 <input
-                                  id="candidates"
-                                  name="category"
+                                  id="correzione-bozze"
+                                  name="correzione-bozze"
                                   type="checkbox"
-                                  value="Servizio2"
+                                  value="Correzione bozze"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
                               </div>
-                              <div className="text-sm leading-6">
+                              <div className="text-sm leading-5">
                                 <label
-                                  htmlFor="candidates"
+                                  htmlFor="correzione-bozze"
                                   className="font-medium text-gray-900"
                                 >
-                                  Candidates
+                                  Correzione bozze
                                 </label>
                                 <p className="text-gray-500">
-                                  Get notified when a candidate applies for a
-                                  job.
+                                  Ci assicureremo che il tuo testo sia privo di refusi e ripetizioni di termini e che risulti pulito.
                                 </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
                               <div className="flex h-6 items-center">
                                 <input
-                                  id="offers"
-                                  name="category"
+                                  id="design-copertina"
+                                  name="design-copertina"
                                   type="checkbox"
-                                  value="Servizio3"
+                                  value="Design copertina"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
                               </div>
-                              <div className="text-sm leading-6">
+                              <div className="text-sm leading-5">
                                 <label
-                                  htmlFor="offers"
+                                  htmlFor="design-copertina"
                                   className="font-medium text-gray-900"
                                 >
-                                  Offers
+                                  Design copertina
                                 </label>
                                 <p className="text-gray-500">
-                                  Get notified when a candidate accepts or
-                                  rejects an offer.
+                                  Progettazione e realizzazione grafica della copertina per il tuo progetto.
+                                </p>
+                              </div>
+                            </div>
+                            <div className="relative flex gap-x-3">
+                              <div className="flex h-6 items-center">
+                                <input
+                                  id="impaginazione"
+                                  name="impaginazione"
+                                  type="checkbox"
+                                  value="Impaginazione"
+                                  onChange={handleChecked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                />
+                              </div>
+                              <div className="text-sm leading-5">
+                                <label
+                                  htmlFor="impaginazione"
+                                  className="font-medium text-gray-900"
+                                >
+                                  Impaginazione
+                                </label>
+                                <p className="text-gray-500">
+                                  Daremo al tuo testo una veste interna gradevole e ordinata.
+                                </p>
+                              </div>
+                            </div>
+                            <div className="relative flex gap-x-3">
+                              <div className="flex h-6 items-center">
+                                <input
+                                  id="web-design"
+                                  name="web-design"
+                                  type="checkbox"
+                                  value="web-design"
+                                  onChange={handleChecked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                />
+                              </div>
+                              <div className="text-sm leading-5">
+                                <label
+                                  htmlFor="web-design"
+                                  className="font-medium text-gray-900"
+                                >
+                                  Web Design
+                                </label>
+                                <p className="text-gray-500">
+                                  Creeremo per te un sito web di presentazione su di te, i tuoi testi, la tua biografia e il collegamento ai tuoi social.
+                                </p>
+                              </div>
+                            </div>
+                            <div className="relative flex gap-x-3">
+                              <div className="flex h-6 items-center">
+                                <input
+                                  id="traduzione"
+                                  name="traduzione"
+                                  type="checkbox"
+                                  value="Traduzione"
+                                  onChange={handleChecked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                />
+                              </div>
+                              <div className="text-sm leading-5">
+                                <label
+                                  htmlFor="traduzione"
+                                  className="font-medium text-gray-900"
+                                >
+                                  Traduzione
+                                </label>
+                                <p className="text-gray-500">
+                                  Se sei un scrittore straniero ci occuperemo di tradurre il tuo testo così che tu possa inserirlo nel mercato italiano.
+                                </p>
+                              </div>
+                            </div>
+                            <div className="relative flex gap-x-3">
+                              <div className="flex h-6 items-center">
+                                <input
+                                  id="promozione"
+                                  name="promozione"
+                                  type="checkbox"
+                                  value="Promozione"
+                                  onChange={handleChecked}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                />
+                              </div>
+                              <div className="text-sm leading-5">
+                                <label
+                                  htmlFor="promozione"
+                                  className="font-medium text-gray-900"
+                                >
+                                  Pubblicità / Promozione
+                                </label>
+                                <p className="text-gray-500">
+                                  Pubblicizzeremo il tuo testo nei nostri canali e pubblicheremo i primi due capitoli che saranno visualizzabili da altri utenti.
                                 </p>
                               </div>
                             </div>

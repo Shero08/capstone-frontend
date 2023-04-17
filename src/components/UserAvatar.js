@@ -27,7 +27,7 @@ const UserAvatar = () => {
 
 
     setTimeout(() => {
-      window.location.reload();
+      window.location.reload(); 
     }, 1000)
     });
 

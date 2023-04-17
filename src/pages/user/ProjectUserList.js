@@ -20,7 +20,7 @@ const ProjectUserList = () => {
   const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects?author=${author}&page=${currentPage}&limit=${limit}`, headers: {}});
 
   const handlePrevClick = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+    setCurrentPage((prevPage) => prevPage - 1); 
   };
 
   const handleNextClick = () => {
@@ -40,9 +40,9 @@ const ProjectUserList = () => {
         setTotPages(data.totalPages)
     }
 
-    console.log(data);
+    console.log(data, error);
     console.log(author);
-  }, [data, author])
+  }, [data, author, error])
 
   return (
     <div className='flex bg-capstone-bg w-full'>
@@ -72,7 +72,7 @@ const ProjectUserList = () => {
                 </div>
             </div>
 
-            {!loading && error && (
+            {!loading && error && ( 
                 <div className="mb-4 rounded-lg bg-danger-100 py-5 px-6 text-base text-danger-700" role="alert">{error}</div>
             )}
             {loading && <div className='mx-auto'><LoadingIndicator /></div>}
@@ -86,7 +86,6 @@ const ProjectUserList = () => {
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Autore</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Servizio</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Editor</th>
-                            <th scope="col" className="px-6 py-4 font-medium text-gray-900"></th>
                         </tr>
                     </thead>
 
@@ -100,7 +99,7 @@ const ProjectUserList = () => {
                         ))}
 
                         <tr className='border-none'>
-                            <td colSpan={6} className='w-full'>
+                            <td colSpan={5} className='w-full'>
                                 <Pagination
                                     handlePrevClick={handlePrevClick}
                                     handleNextClick={handleNextClick}

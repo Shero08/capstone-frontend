@@ -20,7 +20,7 @@ const usePatchAxios = ({ url, headers }) => {
             toastUpdateSuccess.updateSuccess() 
           })
           .finally(() => setLoading(false));
-        } 
+        }  
         catch (error) {
           toast.signupError()
 

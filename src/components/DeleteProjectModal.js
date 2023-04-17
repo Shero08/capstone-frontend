@@ -3,10 +3,10 @@ import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
 import useDeleteAxios from '../hooks/useDeleteAxios';
 
-const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, isRefresh }) => {
+const DeleteProjectModal = ({ isOpenDelete, closeDeleteModal, title, id, isRefresh }) => {
   const toast = new HotToast();
 
-  const { deleteData, error } = useDeleteAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
+  const { deleteData, error } = useDeleteAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${id}`, headers: {}});
   
   const handleDelete = (e) => {
     e.preventDefault()
@@ -53,7 +53,7 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
                             as="h3"
                             className="text-lg font-medium leading-6 text-gray-900"
                         >
-                            Vuoi eliminare l'utente {name} {surname}?
+                            Vuoi eliminare il progetto: {title}?
                         </Dialog.Title>
                         <form className="mt-2" onSubmit={handleDelete}>
                             <div className="mt-6 flex items-center justify-end gap-x-6">
@@ -83,4 +83,4 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
   )
 }
 
-export default DeleteUserModal
+export default DeleteProjectModal

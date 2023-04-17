@@ -5,6 +5,7 @@ import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import SingleProjectRow from '../../components/SingleProjectRow';
 import Pagination from '../../components/Pagination';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import NewProjectModal from '../../components/NewProjectModal';
 
 const ProjectList = () => {
   const [isOpenModalNewProject, setIsOpenModalNewProject] = useState(false);
@@ -109,6 +110,12 @@ const ProjectList = () => {
                 </table>
             </div>
 
+            <NewProjectModal 
+                isOpenModalNewProject={isOpenModalNewProject}
+                openModalNewProject={openModalNewProject}
+                closeModalNewProject={closeModalNewProject}
+                isRefresh={isRefresh}
+            />
         </main>
     </div>
   )

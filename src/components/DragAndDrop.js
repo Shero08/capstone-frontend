@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TrashIcon, FolderOpenIcon } from '@heroicons/react/24/outline';
 
 const DragAndDrop = ({ formData, onFormDataChange }) => {
   const [message, setMessage] = useState();
@@ -32,11 +33,11 @@ const DragAndDrop = ({ formData, onFormDataChange }) => {
 
   return (
     <>
-        <div className="p-3 rounded-md col-span-full">
+        <div className="rounded-md col-span-full">
           <span className="flex justify-center items-center bg-white text-md mb-1 text-red-500">
             {message}
           </span>
-          <div className="h-32 w-full overflow-hidden relative shadow-md items-center rounded-lg border border-dashed border-gray-900/25">
+          <div className="h-32 w-full overflow-hidden relative items-center rounded-lg border-2 border-dashed border-gray-900/25">
             <input
               type="file"
               onChange={handleFile}
@@ -44,8 +45,8 @@ const DragAndDrop = ({ formData, onFormDataChange }) => {
               name="file"
             />
             <div className="h-full w-full bg-white absolute z-1 flex justify-center items-center top-0">
-              <div className="flex flex-col">
-                <i className="mdi mdi-folder-open text-[30px] text-gray-400 text-center"></i>
+              <div className="flex items-center gap-2">
+                <FolderOpenIcon className='w-6' />
                 <span className="text-md">{`Drag and Drop a file`}</span>
               </div>
             </div>
@@ -71,7 +72,7 @@ const DragAndDrop = ({ formData, onFormDataChange }) => {
                     }}
                     className="h-6 w-6 bg-red-400 flex items-center cursor-pointer justify-center rounded-sm"
                   >
-                    <i className="mdi mdi-trash-can text-white text-[14px]"></i>
+                    <TrashIcon className='w-6' />
                   </div>
                 </div>
             }

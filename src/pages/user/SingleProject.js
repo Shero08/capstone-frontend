@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from '../../components/Sidebar';
 import useAxios from '../../hooks/useAxios';
 import LoadingIndicator from '../../components/LoadingIndicator'
 import SingleFile from '../../components/SingleFile';
+import useSession from '../../hooks/useSession';
+import CancelProjectModal from '../../components/CancelProjectModal';
 
 const SingleProject = () => {
   const { _id } = useParams();
   const navigate = useNavigate();
+  const session = useSession()
+  const [isOpenCancel, setIsOpenCancel] = useState(false);
 
-  const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${_id}`, headers: {}});
-
-  console.log(data);
+  const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${_id}`, headers: {}});
 
   const date = new Date(data.createdAt);
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   const formattedDate = date.toLocaleDateString('it-IT', options);
   const fileName = data && data.file && data.file.filename
+
+  const openCancelModal = () => {
+    setIsOpenCancel(true)
+  }
+
+  const closeCancelModal = () => {
+    setIsOpenCancel(false)
+  }
 
   return (
     <div className='flex bg-capstone-bg w-full'>
@@ -67,15 +77,60 @@ const SingleProject = () => {
                     </div>        
                     <div className='border-t border-t-gray-200 italic'>
                         <p>Servizio richiesto: {data && data.category && data.category.map((service, index) => (
-                            <span key={index}>{service}</span>
+                            <span 
+                              key={index}
+                              className='inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600 mx-1'
+                            >
+                              {service}
+                            </span>
                         ))}</p>
                     </div>       
                     
+                </div>
+
+                <div className='flex justify-end mt-3'>
+                  <div className='flex items-center gap-4'>
+                    {data.status !== 'completo' && data.status !== 'annullato' ?
+                    <button
+                      type='button'
+                      onClick={openCancelModal}
+                      className='bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-xl'
+                    >
+                      Annulla progetto
+                    </button>
+                    : ''}
+
+                    {session?.role === 'admin' ?
+                      <div className='flex gap-4'>
+                        <button
+                          type='button'
+                          className='bg-indigo-600 hover:bg-indigo-500 text-white py-2 px-4 rounded-xl'
+                        >
+                          Modifica
+                        </button>
+                        <button
+                          type='button'
+                          className='bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-xl'
+                        >
+                          Accetta
+                        </button>
+                      </div>
+                    : ''}
+                  </div>
                 </div>
             </div>
           }
 
         </div>
+
+        <CancelProjectModal 
+          isOpenCancel={isOpenCancel}
+          openCancelModal={openCancelModal}
+          closeCancelModal={closeCancelModal}
+          title={data.title}
+          id={_id}
+          isRefresh={isRefresh}
+        />
       </main>
     </div>
   )

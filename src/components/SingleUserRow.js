@@ -118,6 +118,7 @@ const SingleUserRow = (props) => {
                     name={name}
                     surname={surname}
                     id={_id}
+                    isRefresh={isRefresh}
                 />
             </td>
         </tr>

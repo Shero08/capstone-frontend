@@ -1,18 +1,24 @@
 import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
-import useDeleteAxios from '../hooks/useDeleteAxios';
+import usePatchAxios from '../hooks/usePatchAxios';
 
-const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, isRefresh }) => {
+const CancelProjectModal = ({ isOpenCancel, closeCancelModal, title, id, isRefresh }) => {
   const toast = new HotToast();
 
-  const { deleteData, error } = useDeleteAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
+  const { data, error, patch } = usePatchAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${id}`, headers: {
+    "Content-Type": "application/json"
+  }});
   
-  const handleDelete = (e) => {
+  const handleCancel = (e) => {
     e.preventDefault()
 
-    deleteData().then(() => {
-        closeDeleteModal()
+    const cancelStatus = {
+        status: 'annullato'
+    }
+
+    patch(cancelStatus).then(() => {
+        closeCancelModal()
         isRefresh()
     })
 
@@ -23,8 +29,8 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
 
   return (
     <>
-        <Transition appear show={isOpenDelete} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
+        <Transition appear show={isOpenCancel} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeCancelModal}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -53,13 +59,13 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
                             as="h3"
                             className="text-lg font-medium leading-6 text-gray-900"
                         >
-                            Vuoi eliminare l'utente {name} {surname}?
+                            Vuoi davvero annullare il progetto: {title}?
                         </Dialog.Title>
-                        <form className="mt-2" onSubmit={handleDelete}>
+                        <form className="mt-2" onSubmit={handleCancel}>
                             <div className="mt-6 flex items-center justify-end gap-x-6">
                                 <button 
                                     type='button'
-                                    onClick={closeDeleteModal}
+                                    onClick={closeCancelModal}
                                     className="text-sm font-semibold leading-6 text-gray-900"
                                 >
                                     Annulla
@@ -68,7 +74,7 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
                                     type="submit"
                                     className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Elimina
+                                    Conferma annullamento
                                 </button>
                             </div>
                         </form>
@@ -83,4 +89,4 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
   )
 }
 
-export default DeleteUserModal
+export default CancelProjectModal

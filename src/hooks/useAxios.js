@@ -15,7 +15,10 @@ const useAxios = ({ url, headers }) => {
         .then((res) => {
           setData(res.data);
         })
-        .finally(() => setLoading(false)); 
+        .finally(() => {
+          setLoading(false);
+          setError(false);
+        }); 
     } 
     catch (error) {
       setError(true);

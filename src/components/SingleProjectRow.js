@@ -1,15 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { Toaster } from 'react-hot-toast';
-import DeleteUserModal from './DeleteUserModal';
+import DeleteProjectModal from './DeleteProjectModal';
 import useSession from '../hooks/useSession';
 import { Link } from 'react-router-dom';
 
 const SingleProjectRow = (props) => {
   const session = useSession()
-  const [isOpenDelete, setIsOpenDelete] = useState(false)
-  const {title, description, category, author, file, status, editor, _id, isRefresh} = props;
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [statusClass, setStatusClass] = useState('');
+  const {title, description, category, author, status, editor, _id, isRefresh} = props;
 
   const openDeleteModal = () => {
     setIsOpenDelete(true)
@@ -18,6 +18,18 @@ const SingleProjectRow = (props) => {
   const closeDeleteModal = () => {
     setIsOpenDelete(false)
   } 
+
+  useEffect(() => {
+    if (status === "in attesa") {
+      setStatusClass("text-gray-600 bg-gray-300");
+    } else if (status === "completo") {
+      setStatusClass("text-white bg-green-600");
+    } else if (status === "in lavorazione") {
+      setStatusClass("text-black bg-orange-600"); 
+    } else {
+      setStatusClass("text-white bg-red-600");
+    }
+  }, [status]);
 
   return (
     <>
@@ -35,16 +47,27 @@ const SingleProjectRow = (props) => {
             </th>
 
             <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                <div className={`inline px-3 py-1 text-sm font-normal rounded-full text-white gap-x-2 bg-emerald-100/60 ${status ? 'bg-green-600' : 'bg-red-600'}`}>
+                <div className={`inline px-3 py-1 text-sm font-normal rounded-full text-white gap-x-2 bg-emerald-100/60 ${statusClass}`}>
                     {status}
                 </div>    
             </td>
 
             <td className="px-6 py-4">{author.name} {author.surname}</td>
 
-            <td className="px-6 py-4">{category}</td>
+            <td className="px-6 py-4">
+                <div className='flex gap-2'>
+                {category && category.map((cat) => {
+                    return (<span 
+                        key={cat}
+                        className='inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600'
+                    >
+                        {cat}
+                    </span>)
+                })}
+                </div>
+            </td>
 
-            <td className="px-6 py-4">{editor}</td>
+            <td className="px-6 py-4">{editor ? editor : 'Progetto in validazione'}</td>
 
             {session?.role === 'admin' ?
             <td className="px-6 py-4">
@@ -79,7 +102,7 @@ const SingleProjectRow = (props) => {
             </td>
 
             <td>
-                <DeleteUserModal 
+                <DeleteProjectModal 
                     isOpenDelete={isOpenDelete}
                     openDeleteModal={openDeleteModal}
                     closeDeleteModal={closeDeleteModal}
@@ -87,6 +110,7 @@ const SingleProjectRow = (props) => {
                     description={description}
                     author={author}
                     id={_id}
+                    isRefresh={isRefresh}
                 />
             </td>
         </tr>
