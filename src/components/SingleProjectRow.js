@@ -9,7 +9,11 @@ const SingleProjectRow = (props) => {
   const session = useSession()
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [statusClass, setStatusClass] = useState('');
-  const {title, description, category, author, status, editor, _id, isRefresh} = props;
+  const {title, description, createdAt, category, author, status, editor, _id, isRefresh} = props;
+
+  const date = new Date(createdAt);
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  const formattedDate = date.toLocaleDateString('it-IT', options);
 
   const openDeleteModal = () => {
     setIsOpenDelete(true)
@@ -32,7 +36,7 @@ const SingleProjectRow = (props) => {
   }, [status]);
 
   return (
-    <>
+    <> 
         <tr className="hover:bg-gray-50">
 
             <th className="px-6 py-4 font-normal text-gray-900">
@@ -45,6 +49,8 @@ const SingleProjectRow = (props) => {
                     <div className="text-gray-400">{description}</div>
                 </div>
             </th>
+
+            <td className="px-6 py-4">{formattedDate}</td>
 
             <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                 <div className={`inline px-3 py-1 text-sm font-normal rounded-full text-white gap-x-2 bg-emerald-100/60 ${statusClass}`}>
@@ -67,7 +73,7 @@ const SingleProjectRow = (props) => {
                 </div>
             </td>
 
-            <td className="px-6 py-4">{editor ? editor : 'Progetto in validazione'}</td>
+            <td className="px-6 py-4">{editor ? (editor.name + ' ' + editor.surname) : 'Progetto in validazione'}</td>
 
             {session?.role === 'admin' ?
             <td className="px-6 py-4">

@@ -1,22 +1,22 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import HotToast from "../classes/hotToastClass";
-import usePostAxios from "../hooks/usePostAxios";
+import usePatchAxios from "../hooks/usePatchAxios";
 import DragAndDrop from "./DragAndDrop";
-import useSession from "../hooks/useSession";
+import useSession from '../hooks/useSession';
 
-const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefresh, author }) => {
+const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, id}) => {
   const toast = new HotToast();
-  const session = useSession();
-  const userToken = session && session?.userToken
   const [formData, setFormData] = useState({category: []});
   const [isChecked, setIsChecked] = useState(false);
+  const session = useSession();
+  const userToken = session && session?.userToken
 
-  const { data, error, post } = usePostAxios({
-    url: `${process.env.REACT_APP_API_URL}/projects`,
+  const { data, error, patch } = usePatchAxios({
+    url: `${process.env.REACT_APP_API_URL}/projects/${id}`,
     headers: {
-      'Content-Type': 'multipart/form-data', 
-      'Authorization': userToken
+      "Content-Type": "multipart/form-data",
+      "Authorization": userToken
     },
   });
 
@@ -32,7 +32,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
       updatedCategory = updatedCategory.filter((cat) => cat !== value);
     }
 
-    setFormData({ ...formData, author: author, category: updatedCategory });
+    setFormData({ ...formData, category: updatedCategory });
   }
 
   const handleFormDataChange = (fileData) => {
@@ -44,8 +44,8 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
 
     setFormData(formData);
 
-    post(formData).then(() => {
-      closeModalNewProject();
+    patch(formData).then(() => {
+      closeUpdateProjectModal();
 
       isRefresh();
     });
@@ -57,15 +57,15 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
 
   useEffect(() => {
     console.log(formData);
-  }, [isChecked, formData, author])
+  }, [isChecked, formData])
 
   return (
     <>
-      <Transition appear show={isOpenModalNewProject} as={Fragment}>
+      <Transition appear show={isOpenUpdate} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={closeModalNewProject}
+          onClose={closeUpdateProjectModal}
         >
           <Transition.Child
             as={Fragment}
@@ -95,7 +95,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                     as="h3"
                     className="text-lg font-bold leading-6 text-gray-900"
                   >
-                    Inserisci nuovo progetto:
+                    Modifica progetto:
                   </Dialog.Title>
                   <form className="mt-2" onSubmit={handleCreate}>
                     <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
@@ -110,6 +110,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                             id="project-title"
                             placeholder="Inserisci titolo"
                             required
+                            defaultValue={title}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             onChange={(e) =>
                               setFormData({
@@ -124,12 +125,13 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                       <div className="col-span-full">
                         <div className="mt-2">
                           <label htmlFor="project-desc" className="block text-sm font-medium leading-6 text-gray-900">
-                            Descrizione progetto:
+                            Modifica descrizione progetto:
                           </label>
                           <input
                             type="text"
                             name="description"
                             id="project-desc"
+                            defaultValue={description}
                             placeholder="Inserisci descrizione progetto"
                             required
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -330,7 +332,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                     <div className="mt-6 flex items-center justify-end gap-x-6">
                       <button
                         type="button"
-                        onClick={closeModalNewProject}
+                        onClick={closeUpdateProjectModal}
                         className="text-sm font-semibold leading-6 text-gray-900"
                       >
                         Annulla
@@ -353,4 +355,4 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
   );
 };
 
-export default NewProjectModal;
+export default UpdateProjectModal;

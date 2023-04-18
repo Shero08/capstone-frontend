@@ -3,18 +3,21 @@ import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
 import usePostAxios from '../hooks/usePostAxios';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import useSession from '../hooks/useSession';
 
-const NewUserModal = ({ isOpenModalNewUser, closeModalNewUser }) => {
+const NewUserModal = ({ isOpenModalNewUser, closeModalNewUser, isRefresh }) => {
   const toast = new HotToast();
+  const session = useSession();
+  const userToken = session && session?.userToken
   const [formData, setFormData] = useState({});
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const { data, error, post } = usePostAxios({ url: `${process.env.REACT_APP_API_URL}/users`, headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": userToken
   }});
-  
 
   const handleUpdate = (e) => {
     e.preventDefault()
@@ -36,11 +39,9 @@ const NewUserModal = ({ isOpenModalNewUser, closeModalNewUser }) => {
     setFormData( updatedFormData );
 
     post(updatedFormData).then(() => {
-        closeModalNewUser()
+        closeModalNewUser();
 
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000)
+        isRefresh();
     });
 
     if(error){

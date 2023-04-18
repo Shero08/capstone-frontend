@@ -2,11 +2,16 @@ import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
 import useDeleteAxios from '../hooks/useDeleteAxios';
+import useSession from '../hooks/useSession';
 
 const DeleteProjectModal = ({ isOpenDelete, closeDeleteModal, title, id, isRefresh }) => {
   const toast = new HotToast();
+  const session = useSession();
+  const userToken = session && session?.userToken
 
-  const { deleteData, error } = useDeleteAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${id}`, headers: {}});
+  const { deleteData, error } = useDeleteAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${id}`, headers: {
+    "Authorization": userToken
+  }});
   
   const handleDelete = (e) => {
     e.preventDefault()

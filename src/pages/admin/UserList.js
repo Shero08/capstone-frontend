@@ -37,8 +37,6 @@ const UserList = () => {
     }
   }, [data])
 
-  console.log(isRefresh);
-
   return (
     <div className='flex bg-capstone-bg w-full'>
         <Sidebar />
@@ -106,6 +104,7 @@ const UserList = () => {
                 isOpenModalNewUser={isOpenModalNewUser}
                 openModalNewUser={openModalNewUser}
                 closeModalNewUser={closeModalNewUser}
+                isRefresh={isRefresh}
             />
         </main>
     </div> 

@@ -1,23 +1,31 @@
 import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
-import useDeleteAxios from '../hooks/useDeleteAxios';
+import usePatchAxios from '../hooks/usePatchAxios';
 import useSession from '../hooks/useSession';
 
-const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, isRefresh }) => {
+const AcceptProjectModal = ({ isOpenAcceptModal, closeAcceptProjectModal, title, id, editor, isRefresh }) => {
   const toast = new HotToast();
   const session = useSession();
   const userToken = session && session?.userToken
 
-  const { deleteData, error } = useDeleteAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {
+  const { data, error, patch } = usePatchAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${id}`, headers: {
+    "Content-Type": "application/json",
     "Authorization": userToken
   }});
   
-  const handleDelete = (e) => {
+  const handleAccept = (e) => {
     e.preventDefault()
 
-    deleteData().then(() => {
-        closeDeleteModal()
+    const acceptStatus = {
+        status: 'in lavorazione',
+        editor: editor
+    }
+
+    console.log(acceptStatus);
+
+    patch(acceptStatus).then(() => {
+        closeAcceptProjectModal()
         isRefresh()
     })
 
@@ -28,8 +36,8 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
 
   return (
     <>
-        <Transition appear show={isOpenDelete} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
+        <Transition appear show={isOpenAcceptModal} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeAcceptProjectModal}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -58,22 +66,22 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
                             as="h3"
                             className="text-lg font-medium leading-6 text-gray-900"
                         >
-                            Vuoi eliminare l'utente {name} {surname}?
+                            Vuoi prendere in carico il progetto: {title}?
                         </Dialog.Title>
-                        <form className="mt-2" onSubmit={handleDelete}>
+                        <form className="mt-2" onSubmit={handleAccept}>
                             <div className="mt-6 flex items-center justify-end gap-x-6">
                                 <button 
                                     type='button'
-                                    onClick={closeDeleteModal}
+                                    onClick={closeAcceptProjectModal}
                                     className="text-sm font-semibold leading-6 text-gray-900"
                                 >
                                     Annulla
                                 </button>
                                 <button
                                     type="submit"
-                                    className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Elimina
+                                    Accetta
                                 </button>
                             </div>
                         </form>
@@ -88,4 +96,4 @@ const DeleteUserModal = ({ isOpenDelete, closeDeleteModal, name, surname, id, is
   )
 }
 
-export default DeleteUserModal
+export default AcceptProjectModal

@@ -77,6 +77,7 @@ const ProjectList = () => {
                     <thead className="bg-gray-50">
                         <tr>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Titolo</th>
+                            <th scope="col" className="px-6 py-4 font-medium text-gray-900">Data</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Stato</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Autore</th>
                             <th scope="col" className="px-6 py-4 font-medium text-gray-900">Servizio</th>
@@ -95,7 +96,7 @@ const ProjectList = () => {
                         ))}
 
                         <tr className='border-none'>
-                            <td colSpan={6} className='w-full'>
+                            <td colSpan={7} className='w-full'>
                                 <Pagination
                                     handlePrevClick={handlePrevClick}
                                     handleNextClick={handleNextClick}

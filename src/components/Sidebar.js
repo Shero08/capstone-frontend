@@ -9,9 +9,10 @@ import useWindowSize from '../hooks/useWindowSize';
 const Sidebar = () => {
   const navigate = useNavigate();
   const session = useSession();
+  const userSession = session && session.userSession
   const { open, handleToggleSidebar } = useWindowSize();
 
-  const id = session?.id
+  const id = userSession?.id
 
   const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
 
@@ -58,7 +59,7 @@ const Sidebar = () => {
                 </Link>
             </li>
 
-            {session?.role === 'admin' &&
+            {userSession?.role === 'admin' &&
             <li className='text-xl font-medium p-2 hover:bg-opacity-25 hover:bg-gray-200 rounded-md duration-150 mb-3'>
                 <Link to='/admin/user' className='flex items-center gap-x-4'>
                     <UserIcon className='w-6 ' /> 

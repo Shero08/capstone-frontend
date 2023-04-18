@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Sidebar from '../../components/Sidebar';
 import useAxios from '../../hooks/useAxios';
 import LoadingIndicator from '../../components/LoadingIndicator'
 import SingleFile from '../../components/SingleFile';
 import useSession from '../../hooks/useSession';
 import CancelProjectModal from '../../components/CancelProjectModal';
+import UpdateProjectModal from '../../components/UpdateProjectModal';
+import AcceptProjectModal from '../../components/AcceptProjectModal';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+
 
 const SingleProject = () => {
   const { _id } = useParams();
   const navigate = useNavigate();
-  const session = useSession()
+  const session = useSession();
   const [isOpenCancel, setIsOpenCancel] = useState(false);
+  const [isOpenUpdate, setIsOpenUpdate] = useState(false);
+  const [isOpenAcceptModal, setIsOpenAcceptModal] = useState(false);
+  const [statusClass, setStatusClass] = useState('');
 
   const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${_id}`, headers: {}});
 
@@ -28,6 +35,35 @@ const SingleProject = () => {
     setIsOpenCancel(false)
   }
 
+  const openUpdateProjectModal = () => {
+    setIsOpenUpdate(true)
+  }
+
+  const closeUpdateProjectModal = () => {
+    setIsOpenUpdate(false)
+  }
+
+  const openAcceptProjectModal = () => {
+    setIsOpenAcceptModal(true)
+  }
+
+  const closeAcceptProjectModal = () => {
+    setIsOpenAcceptModal(false)
+  }
+
+  useEffect(() => {
+    if (data.status === "in attesa") {
+      setStatusClass("text-gray-600 bg-gray-300");
+    } else if (data.status === "completo") {
+      setStatusClass("text-white bg-green-600");
+    } else if (data.status === "in lavorazione") {
+      setStatusClass("text-black bg-orange-600"); 
+    } else {
+      setStatusClass("text-white bg-red-600");
+    }
+    console.log(session);
+  }, [data]);
+
   return (
     <div className='flex bg-capstone-bg w-full'>
       <Sidebar />
@@ -36,7 +72,7 @@ const SingleProject = () => {
         <div className='mt-12 lg:mx-12'>
 
           {loading && <LoadingIndicator />}
-          {!loading && error && navigate("/404")}
+          {!loading && error && navigate("/login")}
           {!loading && data &&
             <div>
                 <div className='title flex justify-between items-center '>
@@ -47,17 +83,24 @@ const SingleProject = () => {
                       </p>
                     </div>
 
-                    <div className="px-6 py-2 text-xl text-white bg-blue-300 rounded-full dark:bg-gray-800 dark:text-blue-400">
+
+                    <div className={`px-6 py-2 text-xl rounded-full ${statusClass}`}>
                         {data.status}
                     </div>
                 </div>
 
                 <div className='py-6 px-6 mt-6 rounded-xl bg-white shadow'>
-                    <div>
+                    <div className='flex items-center justify-between border-b border-b-gray-200 pb-2 mb-2'>
                         {data && data.author && 
-                            <h2 className='pb-2 mb-4 text-md border-b border-b-gray-200'>
-                                Inserito da: {data.author.name} {data.author.surname}
+                            <h2 className='pb-2 text-md'>
+                                Creato da: {data.author.name} {data.author.surname}
                              </h2>
+                        }
+
+                        {data && data.editor &&
+                          <h2 className='pb-2 text-md'>
+                            Preso in carico da: {data.editor.name} {data.editor.surname}
+                          </h2>
                         }
                     </div>
                     <div className='group flex justify-between items-center'>
@@ -70,13 +113,15 @@ const SingleProject = () => {
                             <div>
                               <SingleFile 
                                 fileName={fileName}
-                                id={_id}
+                                id={_id} 
+                                status={data.status}
                               />
                             </div>
                         </div>
                     </div>        
-                    <div className='border-t border-t-gray-200 italic'>
-                        <p>Servizio richiesto: {data && data.category && data.category.map((service, index) => (
+                    <div className='border-t border-t-gray-200 italic mt-2'>
+                        <p className='mt-2'>
+                          Servizio richiesto: {data && data.category && data.category.map((service, index) => (
                             <span 
                               key={index}
                               className='inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600 mx-1'
@@ -88,7 +133,19 @@ const SingleProject = () => {
                     
                 </div>
 
-                <div className='flex justify-end mt-3'>
+                <div className='flex justify-between mt-3'>
+                  <div>
+                    <button 
+                      type='button'
+                      as={Link}
+                      onClick={() => {navigate(-1)}}
+                      className='flex items-center gap-x-3 bg-white hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-xl duration-200 shadow'
+                    >
+                      <ArrowLeftIcon className='w-4' />
+                      Torna alla lista lavori
+                    </button>
+                  </div>
+
                   <div className='flex items-center gap-4'>
                     {data.status !== 'completo' && data.status !== 'annullato' ?
                     <button
@@ -101,21 +158,25 @@ const SingleProject = () => {
                     : ''}
 
                     {session?.role === 'admin' ?
-                      <div className='flex gap-4'>
                         <button
                           type='button'
+                          onClick={openUpdateProjectModal}
                           className='bg-indigo-600 hover:bg-indigo-500 text-white py-2 px-4 rounded-xl'
                         >
                           Modifica
                         </button>
+                      : ''}
+
+                    {session?.role === 'admin' && data.status === 'in attesa' ?
                         <button
                           type='button'
+                          onClick={openAcceptProjectModal}
                           className='bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-xl'
                         >
                           Accetta
                         </button>
-                      </div>
                     : ''}
+                    
                   </div>
                 </div>
             </div>
@@ -129,6 +190,26 @@ const SingleProject = () => {
           closeCancelModal={closeCancelModal}
           title={data.title}
           id={_id}
+          isRefresh={isRefresh}
+        />
+
+        <UpdateProjectModal 
+          isOpenUpdate={isOpenUpdate}
+          openUpdateProjectModal={openUpdateProjectModal}
+          closeUpdateProjectModal={closeUpdateProjectModal}
+          title={data.title}
+          description={data.description}
+          id={_id}
+          isRefresh={isRefresh}
+        />
+
+        <AcceptProjectModal 
+          isOpenAcceptModal={isOpenAcceptModal}
+          openAcceptProjectModal={openAcceptProjectModal}
+          closeAcceptProjectModal={closeAcceptProjectModal}
+          title={data.title}
+          id={_id}
+          editor={session?.id}
           isRefresh={isRefresh}
         />
       </main>

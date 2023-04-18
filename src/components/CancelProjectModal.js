@@ -2,12 +2,16 @@ import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
 import usePatchAxios from '../hooks/usePatchAxios';
+import useSession from '../hooks/useSession';
 
 const CancelProjectModal = ({ isOpenCancel, closeCancelModal, title, id, isRefresh }) => {
   const toast = new HotToast();
+  const session = useSession();
+  const userToken = session && session?.userToken
 
   const { data, error, patch } = usePatchAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${id}`, headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": userToken
   }});
   
   const handleCancel = (e) => {

@@ -10,8 +10,6 @@ const usePostLogin = ({ url, headers }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  
-  
   const post = async (postData) => {
     setLoading(true);
     try {
@@ -22,7 +20,8 @@ const usePostLogin = ({ url, headers }) => {
         if(token){
           setData(res.data);
           const decoded = jwt_decode(token)
-          localStorage.setItem('token', JSON.stringify(decoded))
+          localStorage.setItem('token', JSON.stringify(decoded))  
+          localStorage.setItem('authToken', JSON.stringify(token)) 
 
           decoded.role === 'admin' 
           ? navigate('/admin', { replace: true })

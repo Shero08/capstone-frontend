@@ -1,22 +1,26 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import HotToast from "../classes/hotToastClass";
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import usePatchAxios from '../hooks/usePatchAxios';
+import useSession from '../hooks/useSession';
 
 const UpdateUserModal = ({ isOpenUpdate, closeUpdateModal, name, surname, nickname, email, isActive, role, birth, id, isRefresh }) => {
   const toast = new HotToast();
+  const session = useSession();
+  const userToken = session && session?.userToken
   const [formData, setFormData] = useState({});
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const { data, error, patch } = usePatchAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": userToken
   }});
   
 
-  const handleUpdate = (e) => {
+  const handleUpdate = (e) => { 
     e.preventDefault()
 
     if(password !== confirmPassword){
