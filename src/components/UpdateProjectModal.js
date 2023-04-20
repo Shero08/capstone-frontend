@@ -7,11 +7,12 @@ import useSession from '../hooks/useSession';
 
 const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, category, id}) => {
   const toast = new HotToast();
-  const [categoryData, setCategoryData] = useState(null)
+  const [categoryData, setCategoryData] = useState([])
   const [formData, setFormData] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const session = useSession();
   const userToken = session && session?.userToken
+  let updatedCategory = [...categoryData];
 
   const { data, error, patch } = usePatchAxios({
     url: `${process.env.REACT_APP_API_URL}/projects/${id}`,
@@ -25,9 +26,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
     const target = e.target;
     const value = target.value;
     const checked = target.checked;
-
-    let updatedCategory = [...formData.category];
-    console.log(updatedCategory);
 
     if (checked) {
       updatedCategory.push(value);
@@ -61,11 +59,12 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
 
   useEffect(() => {
     console.log(formData);
-    setCategoryData(category)
-    setFormData({ ...formData, category: categoryData })
+    if(category){
+      setCategoryData(category)
+    }
     console.log(categoryData);
-    console.log(category);
-  }, [isChecked, category])
+    console.log(updatedCategory);
+  }, [category, formData, categoryData, updatedCategory])
 
   return (
     <>
@@ -164,8 +163,9 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                           />
                         </div>
                       </div>
-
-                      <div className="col-span-full space-y-4">
+                      
+                      {category ? 
+                      (<div className="col-span-full space-y-4">
                         <fieldset>
                           <legend className="text-sm font-semibold leading-6 text-gray-900">
                             Seleziona uno o più servizi per il tuo progetto:
@@ -178,7 +178,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   name="editing"
                                   type="checkbox"
                                   value="Editing"
-                                  defaultChecked={category?.includes('Editing')}
+                                  defaultChecked={category && category.includes('Editing')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -199,6 +199,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   name="correzione-bozze"
                                   type="checkbox"
                                   value="Correzione bozze"
+                                  defaultChecked={category && category.includes('Correzione bozze')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -219,6 +220,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   name="design-copertina"
                                   type="checkbox"
                                   value="Design copertina"
+                                  defaultChecked={category && category.includes('Design copertina')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -239,6 +241,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   name="impaginazione"
                                   type="checkbox"
                                   value="Impaginazione"
+                                  defaultChecked={category && category.includes('Impaginazione')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -258,7 +261,8 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   id="web-design"
                                   name="web-design"
                                   type="checkbox"
-                                  value="web-design"
+                                  value="Web Design"
+                                  defaultChecked={category && category.includes('Web Design')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -279,6 +283,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   name="traduzione"
                                   type="checkbox"
                                   value="Traduzione"
+                                  defaultChecked={category && category.includes('Traduzione')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -299,6 +304,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   name="promozione"
                                   type="checkbox"
                                   value="Promozione"
+                                  defaultChecked={category && category.includes('Promozione')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -315,6 +321,9 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                           </div>
                         </fieldset>
                       </div>
+                      )
+                      : ''
+                        }
                     </div>
 
                     <div className="mt-6 flex items-center justify-end gap-x-6">
