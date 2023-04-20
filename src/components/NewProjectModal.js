@@ -4,11 +4,14 @@ import HotToast from "../classes/hotToastClass";
 import usePostAxios from "../hooks/usePostAxios";
 import DragAndDrop from "./DragAndDrop";
 import useSession from "../hooks/useSession";
+import { useNavigate } from "react-router-dom"
 
-const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefresh, author }) => {
+const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefresh, author, currentPage }) => {
   const toast = new HotToast();
   const session = useSession();
   const userToken = session && session?.userToken
+  const userSession = session && session?.userSession
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({category: []});
   const [isChecked, setIsChecked] = useState(false);
 
@@ -47,7 +50,11 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
     post(formData).then(() => {
       closeModalNewProject();
 
-      isRefresh();
+      if(currentPage === 'UserDashboard'){
+        userSession?.role === 'admin' ? navigate('/admin/projects') : navigate('/projects')
+      } else {
+        isRefresh();
+      }
     });
 
     if (error) {
@@ -57,6 +64,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
 
   useEffect(() => {
     console.log(formData);
+    console.log(author);
   }, [isChecked, formData, author])
 
   return (

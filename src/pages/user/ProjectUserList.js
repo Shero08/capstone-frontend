@@ -10,11 +10,12 @@ import NewProjectModal from '../../components/NewProjectModal';
 
 const ProjectUserList = () => {
   const session = useSession()
+  const userSession = session && session?.userSession 
   const [isOpenModalNewProject, setIsOpenModalNewProject] = useState(false);
   const [totPages, setTotPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 10;
-  const author = session?.id
+  const author = userSession?.id
   
 
   const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects?author=${author}&page=${currentPage}&limit=${limit}`, headers: {}});

@@ -15,6 +15,7 @@ const SingleProject = () => {
   const { _id } = useParams();
   const navigate = useNavigate();
   const session = useSession();
+  const userSession = session && session?.userSession
   const [isOpenCancel, setIsOpenCancel] = useState(false);
   const [isOpenUpdate, setIsOpenUpdate] = useState(false);
   const [isOpenAcceptModal, setIsOpenAcceptModal] = useState(false);
@@ -61,7 +62,7 @@ const SingleProject = () => {
     } else {
       setStatusClass("text-white bg-red-600");
     }
-    console.log(session);
+    console.log(userSession);
   }, [data]);
 
   return (
@@ -157,7 +158,7 @@ const SingleProject = () => {
                     </button>
                     : ''}
 
-                    {session?.role === 'admin' ?
+                    {userSession?.role === 'admin' ?
                         <button
                           type='button'
                           onClick={openUpdateProjectModal}
@@ -167,7 +168,7 @@ const SingleProject = () => {
                         </button>
                       : ''}
 
-                    {session?.role === 'admin' && data.status === 'in attesa' ?
+                    {userSession?.role === 'admin' && data.status === 'in attesa' ?
                         <button
                           type='button'
                           onClick={openAcceptProjectModal}
@@ -199,6 +200,7 @@ const SingleProject = () => {
           closeUpdateProjectModal={closeUpdateProjectModal}
           title={data.title}
           description={data.description}
+          category={data.category}
           id={_id}
           isRefresh={isRefresh}
         />
@@ -209,7 +211,7 @@ const SingleProject = () => {
           closeAcceptProjectModal={closeAcceptProjectModal}
           title={data.title}
           id={_id}
-          editor={session?.id}
+          editor={userSession?.id}
           isRefresh={isRefresh}
         />
       </main>

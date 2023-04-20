@@ -5,9 +5,10 @@ import usePatchAxios from "../hooks/usePatchAxios";
 import DragAndDrop from "./DragAndDrop";
 import useSession from '../hooks/useSession';
 
-const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, id}) => {
+const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, category, id}) => {
   const toast = new HotToast();
-  const [formData, setFormData] = useState({category: []});
+  const [categoryData, setCategoryData] = useState(null)
+  const [formData, setFormData] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const session = useSession();
   const userToken = session && session?.userToken
@@ -24,7 +25,9 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
     const target = e.target;
     const value = target.value;
     const checked = target.checked;
+
     let updatedCategory = [...formData.category];
+    console.log(updatedCategory);
 
     if (checked) {
       updatedCategory.push(value);
@@ -38,6 +41,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
   const handleFormDataChange = (fileData) => {
     setFormData({ ...formData, file: fileData });
   }
+
 
   const handleCreate = (e) => {
     e.preventDefault();
@@ -57,7 +61,11 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
 
   useEffect(() => {
     console.log(formData);
-  }, [isChecked, formData])
+    setCategoryData(category)
+    setFormData({ ...formData, category: categoryData })
+    console.log(categoryData);
+    console.log(category);
+  }, [isChecked, category])
 
   return (
     <>
@@ -148,7 +156,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                       <div className="col-span-full">
                         <div className="mt-2">
                           <label htmlFor="project-file" className="block text-sm font-medium leading-6 text-gray-900">
-                              Inserisci allegato:
+                              Sostituisci allegato:
                           </label>
                           <DragAndDrop 
                             formData={formData} 
@@ -170,6 +178,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   name="editing"
                                   type="checkbox"
                                   value="Editing"
+                                  defaultChecked={category?.includes('Editing')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -181,9 +190,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                 >
                                   Editing
                                 </label>
-                                <p className="text-gray-500">
-                                  Lavoreremo insieme a te al tuo testo, per cercare di farlo sbocciare nella sua forma migliore. 
-                                </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
@@ -204,9 +210,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                 >
                                   Correzione bozze
                                 </label>
-                                <p className="text-gray-500">
-                                  Ci assicureremo che il tuo testo sia privo di refusi e ripetizioni di termini e che risulti pulito.
-                                </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
@@ -227,9 +230,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                 >
                                   Design copertina
                                 </label>
-                                <p className="text-gray-500">
-                                  Progettazione e realizzazione grafica della copertina per il tuo progetto.
-                                </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
@@ -250,9 +250,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                 >
                                   Impaginazione
                                 </label>
-                                <p className="text-gray-500">
-                                  Daremo al tuo testo una veste interna gradevole e ordinata.
-                                </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
@@ -273,9 +270,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                 >
                                   Web Design
                                 </label>
-                                <p className="text-gray-500">
-                                  Creeremo per te un sito web di presentazione su di te, i tuoi testi, la tua biografia e il collegamento ai tuoi social.
-                                </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
@@ -296,9 +290,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                 >
                                   Traduzione
                                 </label>
-                                <p className="text-gray-500">
-                                  Se sei un scrittore straniero ci occuperemo di tradurre il tuo testo così che tu possa inserirlo nel mercato italiano.
-                                </p>
                               </div>
                             </div>
                             <div className="relative flex gap-x-3">
@@ -319,9 +310,6 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                 >
                                   Pubblicità / Promozione
                                 </label>
-                                <p className="text-gray-500">
-                                  Pubblicizzeremo il tuo testo nei nostri canali e pubblicheremo i primi due capitoli che saranno visualizzabili da altri utenti.
-                                </p>
                               </div>
                             </div>
                           </div>
@@ -341,7 +329,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                         type="submit"
                         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
-                        Crea nuovo progetto
+                        Modifica progetto
                       </button>
                     </div>
                   </form>

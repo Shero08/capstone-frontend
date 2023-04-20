@@ -6,8 +6,11 @@ import NewProjectModal from '../../components/NewProjectModal';
 
 const UserDashboard = () => {
   const session = useSession();
-  const author = session?.id
+  const userSession = session && session?.userSession
+  const author = userSession?.id
   const [isOpenModalNewProject, setIsOpenModalNewProject] = useState(false);
+  const [currentPage, setCurrentPage] = useState('UserDashboard');
+  console.log(currentPage);
 
   const openModalNewProject = () => {
     setIsOpenModalNewProject(true)
@@ -24,7 +27,7 @@ const UserDashboard = () => {
       <main className='flex-1 ml-20 lg:ml-0'>
         <div className='mt-12 lg:mx-12'>
           <h1 className='text-center font-bold text-2xl'>
-            Ciao {session?.name} {session?.surname}!
+            Ciao {userSession?.name} {userSession?.surname}!
           </h1>
 
           <div className='w-full flex justify-center'>
@@ -44,6 +47,7 @@ const UserDashboard = () => {
         openModalNewProject={openModalNewProject}
         closeModalNewProject={closeModalNewProject}
         author={author}
+        currentPage={currentPage}
       />
     </div>
   )

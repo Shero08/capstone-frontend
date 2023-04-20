@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 const SingleProjectRow = (props) => {
   const session = useSession()
+  const userSession = session && session?.userSession
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [statusClass, setStatusClass] = useState('');
   const {title, description, createdAt, category, author, status, editor, _id, isRefresh} = props;
@@ -61,7 +62,7 @@ const SingleProjectRow = (props) => {
             <td className="px-6 py-4">{author.name} {author.surname}</td>
 
             <td className="px-6 py-4">
-                <div className='flex gap-2'>
+                <div className='flex gap-2 flex-wrap'>
                 {category && category.map((cat) => {
                     return (<span 
                         key={cat}
@@ -75,7 +76,7 @@ const SingleProjectRow = (props) => {
 
             <td className="px-6 py-4">{editor ? (editor.name + ' ' + editor.surname) : 'Progetto in validazione'}</td>
 
-            {session?.role === 'admin' ?
+            {userSession?.role === 'admin' ?
             <td className="px-6 py-4">
                 <div className="flex justify-end gap-4">
                     <button 
