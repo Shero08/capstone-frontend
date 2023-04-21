@@ -4,17 +4,22 @@ import HotToast from "../classes/hotToastClass";
 import usePatchAxios from "../hooks/usePatchAxios";
 import DragAndDrop from "./DragAndDrop";
 import useSession from '../hooks/useSession';
+import useAxios from '../hooks/useAxios';
 
-const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, category, id}) => {
+const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, id}) => {
   const toast = new HotToast();
   const [categoryData, setCategoryData] = useState([])
   const [formData, setFormData] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const session = useSession();
   const userToken = session && session?.userToken
-  let updatedCategory = [...categoryData];
+  const [updatedCategory, setUpdatedCategory] = useState(null)
 
-  const { data, error, patch } = usePatchAxios({
+  const { data } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects/${id}`, headers: {}});
+
+  const getDataCategory = data && data?.category
+
+  const { error, patch } = usePatchAxios({
     url: `${process.env.REACT_APP_API_URL}/projects/${id}`,
     headers: {
       "Content-Type": "multipart/form-data",
@@ -23,15 +28,15 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
   });
 
   const handleChecked = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const checked = target.checked;
+    const { name, value, checked } = e.target;
 
     if (checked) {
-      updatedCategory.push(value);
+      setUpdatedCategory([...updatedCategory, name])
     } else {
-      updatedCategory = updatedCategory.filter((cat) => cat !== value);
+      setUpdatedCategory(updatedCategory.filter((input) => input !== name))
     }
+
+    console.log(name, value, checked);
 
     setFormData({ ...formData, category: updatedCategory });
   }
@@ -58,13 +63,13 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
   };
 
   useEffect(() => {
-    console.log(formData);
-    if(category){
-      setCategoryData(category)
+    if(data){
+      setCategoryData(getDataCategory)
+      setUpdatedCategory(getDataCategory)
     }
-    console.log(categoryData);
+    console.log(data.category);
     console.log(updatedCategory);
-  }, [category, formData, categoryData, updatedCategory])
+  }, [data, formData])
 
   return (
     <>
@@ -164,7 +169,7 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                         </div>
                       </div>
                       
-                      {category ? 
+                      {data ? 
                       (<div className="col-span-full space-y-4">
                         <fieldset>
                           <legend className="text-sm font-semibold leading-6 text-gray-900">
@@ -177,8 +182,8 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   id="editing"
                                   name="editing"
                                   type="checkbox"
-                                  value="Editing"
-                                  defaultChecked={category && category.includes('Editing')}
+                                  value="editing"
+                                  defaultChecked={data && data.category && data.category.includes('editing')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -195,11 +200,11 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                             <div className="relative flex gap-x-3">
                               <div className="flex h-6 items-center">
                                 <input
-                                  id="correzione-bozze"
-                                  name="correzione-bozze"
+                                  id="correzione bozze"
+                                  name="correzione bozze"
                                   type="checkbox"
-                                  value="Correzione bozze"
-                                  defaultChecked={category && category.includes('Correzione bozze')}
+                                  value="correzione bozze"
+                                  defaultChecked={data && data.category && data.category.includes('correzione bozze')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -216,11 +221,11 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                             <div className="relative flex gap-x-3">
                               <div className="flex h-6 items-center">
                                 <input
-                                  id="design-copertina"
-                                  name="design-copertina"
+                                  id="design copertina"
+                                  name="design copertina"
                                   type="checkbox"
-                                  value="Design copertina"
-                                  defaultChecked={category && category.includes('Design copertina')}
+                                  value="design copertina"
+                                  defaultChecked={data && data.category && data.category.includes('design copertina')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -240,8 +245,8 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   id="impaginazione"
                                   name="impaginazione"
                                   type="checkbox"
-                                  value="Impaginazione"
-                                  defaultChecked={category && category.includes('Impaginazione')}
+                                  value="impaginazione"
+                                  defaultChecked={data && data.category && data.category.includes('impaginazione')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -258,18 +263,18 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                             <div className="relative flex gap-x-3">
                               <div className="flex h-6 items-center">
                                 <input
-                                  id="web-design"
-                                  name="web-design"
+                                  id="web design"
+                                  name="web design"
                                   type="checkbox"
-                                  value="Web Design"
-                                  defaultChecked={category && category.includes('Web Design')}
+                                  value="web design"
+                                  defaultChecked={data && data.category && data.category.includes('web design')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
                               </div>
                               <div className="text-sm leading-5">
                                 <label
-                                  htmlFor="web-design"
+                                  htmlFor="web design"
                                   className="font-medium text-gray-900"
                                 >
                                   Web Design
@@ -282,8 +287,8 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   id="traduzione"
                                   name="traduzione"
                                   type="checkbox"
-                                  value="Traduzione"
-                                  defaultChecked={category && category.includes('Traduzione')}
+                                  value="traduzione"
+                                  defaultChecked={data && data.category && data.category.includes('traduzione')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -303,8 +308,8 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                                   id="promozione"
                                   name="promozione"
                                   type="checkbox"
-                                  value="Promozione"
-                                  defaultChecked={category && category.includes('Promozione')}
+                                  value="promozione"
+                                  defaultChecked={data && data.category && data.category.includes('Promozione')}
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
