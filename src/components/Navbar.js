@@ -28,23 +28,20 @@ const Navbar = () => {
             </div>
 
             <Popover.Group className="hidden lg:flex lg:ml-6 lg:gap-x-12">
-                <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
-                    Home
+                <Link to='/' className="text-sm font-normal leading-6 text-gray-900">
+                    Chi siamo
                 </Link>
-                <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
+                <Link to='/' className="text-sm font-normal leading-6 text-gray-900">
                     Servizi
                 </Link>
-                <Link to='/' className="text-sm font-semibold leading-6 text-gray-900">
+                <Link to='/' className="text-sm font-normal leading-6 text-gray-900">
                     Contatti
                 </Link>
             </Popover.Group>
 
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                <Link to='/login' className="text-sm font-semibold leading-6 text-gray-900 mr-3">
-                    Login
-                </Link>
-                <Link to='/signup' className="text-sm font-semibold leading-6 text-gray-900">
-                    Sign up
+                <Link to='/login' className="text-sm font-normal leading-6 text-white mr-3 bg-indigo-800 hover:bg-indigo-600 py-1 px-4 rounded-lg">
+                    Entra
                 </Link>
             </div>
         </nav>
@@ -72,17 +69,17 @@ const Navbar = () => {
                     <div className="-my-6 divide-y divide-gray-500/10">
                         <div className="space-y-2 py-6">
                             <Link to='/'
-                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-normal leading-7 text-gray-900 hover:bg-gray-50"
                             >
-                                Home
+                                Chi siamo
                             </Link>
                             <Link to='/'
-                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-normal leading-7 text-gray-900 hover:bg-gray-50"
                             >
                                 Servizi
                             </Link>
                             <Link to='/'
-                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-normal leading-7 text-gray-900 hover:bg-gray-50"
                             >
                                 Contatti
                             </Link>
@@ -90,14 +87,9 @@ const Navbar = () => {
 
                     <div className="py-6">
                         <Link to='/login'
-                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-normal leading-7 text-gray-900 hover:bg-gray-50"
                         >
-                            Login
-                        </Link>
-                        <Link to='/signup' 
-                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                        >
-                            Sign up
+                            Entra
                         </Link>
                     </div>
                     </div>
