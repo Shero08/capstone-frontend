@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Team from "../components/Team";
 import home1 from '../assets/writing.png';
 import Services from "../components/Services";
+import Reviews from '../components/Reviews';
 
 const Index = () => {
   return (
@@ -44,7 +45,9 @@ const Index = () => {
 
         <Team />
 
-        <Services />
+        <Services /> 
+
+        <Reviews />
       </main>
 
       <Footer />
