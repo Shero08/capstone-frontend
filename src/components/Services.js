@@ -1,4 +1,10 @@
-import React from 'react'
+import React from 'react';
+import editing from '../assets/editing.svg';
+import adv from '../assets/advertising.svg';
+import proof from '../assets/proof-reading.svg';
+import translate from '../assets/translate.svg';
+import layout from '../assets/layout.svg';
+import web from '../assets/web-design.svg';
 
 const Services = () => {
   return (
@@ -10,13 +16,20 @@ const Services = () => {
                 base delle tue esigenze:</p>
 
             <div className="grid grid-rows-6 gap-x-8 gap-y-8 sm:grid-rows-3 grid-flow-col pb-8 px-8 mt-10">
-              <div className="px-6">
-                <h1 className='text-indigo-800 font-medium text-2xl mb-2'>Editing</h1>
-                <p className='font-normal text-md'>Lavoreremo insieme a te al tuo testo, per cercare di farlo
-                    sbocciare nella sua forma migliore. Durante l’editing
-                    cureremo la forma e il contenuto assicurandoci che nulla
-                    nel tuo testo sia lasciato al caso.
-                </p>
+              <div className="flex items-center justify-between">
+                <div
+                  className='h-20 w-[120px] bg-cover bg-center'
+                >
+                  <img alt='' src={editing} />
+                </div>
+                <div className='flex-1'>
+                  <h1 className='text-indigo-800 font-medium text-2xl mb-2'>Editing</h1>
+                  <p className='font-normal text-md'>Lavoreremo insieme a te al tuo testo, per cercare di farlo
+                      sbocciare nella sua forma migliore. Durante l’editing
+                      cureremo la forma e il contenuto assicurandoci che nulla
+                      nel tuo testo sia lasciato al caso.
+                  </p>
+                </div>
               </div>
               <div className="px-6">
                 <h1 className='text-indigo-800 font-medium text-2xl mb-2'>Correzione di bozze</h1>
