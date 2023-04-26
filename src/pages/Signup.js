@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { Toaster } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import HotToast from "../classes/hotToastClass";
 import usePostSignup from "../hooks/usePostSignup";
+import logo from '../assets/logo.svg';
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -43,13 +45,15 @@ const Signup = () => {
   }
 
   return (
-    <div className='w-full h-screen flex items-center bg-gray-200'>
-      <div className='mx-auto w-3/4 lg:w-2/4 bg-white rounded-md p-3 shadow-lg'>
-        <h2>Ciao, ancora non sei già registrato?</h2>
-        <h1>Procedi alla registrazione del tuo nuovo account</h1>
+    <div className='w-full h-screen flex items-center bg-indigo-800'>
+      <div className='mx-auto w-3/4 lg:w-2/4 bg-white rounded-xl p-3 shadow-xl'>
+        <Link to={'/'} className='block my-4'>
+          <img className='w-32 mx-auto' src={logo} alt="Logo" />
+        </Link>
+        <h1 className='text-center font-bold text-2xl'>Procedi alla registrazione del tuo nuovo account</h1>
 
         <form onSubmit={handleSignup}>
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-6">
 
             <div className="col-span-3">
               <div className="mt-2">

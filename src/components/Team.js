@@ -8,7 +8,7 @@ import team5 from '../assets/team5.jpg';
 
 const Team = () => {
   return (
-    <div className="bg-indigo-800 py-4">
+    <div className="bg-indigo-800 py-4" id={'team'}>
       <div className="mx-auto max-w-7xl items-center p-6 lg:px-8">
         <div className="grid grid-cols-1 gap-y-6 gap-x-3 sm:grid-cols-2 xl:gap-x-6">
           <div>
@@ -17,7 +17,7 @@ const Team = () => {
               style={{ backgroundImage: `url(${home2})` }}
             ></div>
           </div>
-          <div className="pt-16 pb-16">
+          <div className="md:pt-16 pb-4 md:pb-16">
             <p className="text-center text-white mb-8">
               Il nostro team di esperti è nato per offrirti tutto ciò di cui hai
               bisogno per pubblicare il tuo libro in self-publishing. Editor,

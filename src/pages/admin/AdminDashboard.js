@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from '../../components/Sidebar';
+import AreaChart from '../../components/AreaChart';
 
 const AdminDashboard = () => {
   return (
@@ -42,7 +43,12 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 </div>
-          </div>
+
+            <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-2">
+                <AreaChart />
+            </div>
+        </div>
+
       </main>
     </div>
   )
