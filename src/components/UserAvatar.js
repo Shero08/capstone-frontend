@@ -7,8 +7,9 @@ import LoadingIndicator from '../components/LoadingIndicator';
 const UserAvatar = () => {
   const [src, setSrc] = useState('');
   const session = useSession();
+  const userSession = session && session?.userSession
 
-  const id = session?.id
+  const id = userSession?.id
 
   const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
 

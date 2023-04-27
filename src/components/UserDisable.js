@@ -10,10 +10,11 @@ const UserDisable = () => {
   const navigate = useNavigate();
   const toast = new HotToast();
   const session = useSession();
+  const userSession = session && session?.userSession
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({});
 
-  const id = session?.id
+  const id = userSession?.id
   
   const { error, patch } = usePatchAxios({
     url: `${process.env.REACT_APP_API_URL}/users/${id}`,
@@ -57,7 +58,7 @@ const UserDisable = () => {
         </div>
 
         <div className='px-6 pb-6'>
-            {session?.role !== 'admin' ?
+            {userSession?.role !== 'admin' ?
             <button
                 type='button'
                 onClick={openUserDisableModal}
@@ -99,7 +100,7 @@ const UserDisable = () => {
                             as="h3"
                             className="text-lg font-medium leading-6 text-gray-900"
                         >
-                            Ciao {session?.name} {session?.surname}, ci dispiace che tu vada via, sei sicuro di voler eliminare il tuo account?
+                            Ciao {userSession?.name} {userSession?.surname}, ci dispiace che tu vada via, sei sicuro di voler eliminare il tuo account?
                         </Dialog.Title>
                         <form className="mt-2" onSubmit={handleDisable}>
                             <div className="mt-6 flex items-center justify-end gap-x-6">

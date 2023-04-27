@@ -9,7 +9,9 @@ module.exports = {
       'cover': 'cover',
       'contain': 'contain',
       '50%': '50%',
+      '40%': '40%',
       '30%': '30%',
+      '20%': '20%',
       '16': '4rem',
     },
     extend: {

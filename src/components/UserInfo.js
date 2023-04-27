@@ -9,7 +9,8 @@ import { Toaster } from 'react-hot-toast';
 
 const UserInfo = () => {
   const toast = new HotToast();
-  const session = useSession();
+  const session = useSession(); 
+  const userSession = session && session?.userSession
   const [formData, setFormData] = useState({});
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,7 +18,7 @@ const UserInfo = () => {
   const [UpdateOn, setUpdateOn] = useState(false);
   const [isOpenUpdate, setIsOpenUpdate] = useState(false);
 
-  const id = session?.id
+  const id = userSession?.id
 
   const { data, loading, getError } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
 

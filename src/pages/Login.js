@@ -31,9 +31,9 @@ const Login = () => {
   return (
     <div 
       style={{ backgroundImage: `url(${home2})` }}
-      className='w-full h-screen flex items-center bg-indigo-800 bg-no-repeat bg-left-bottom bg-50%'
+      className='w-full h-screen flex items-center bg-indigo-800 bg-no-repeat bg-left-bottom bg-50% lg:bg-40%'
     >
-      <div className='mx-auto w-3/4 lg:w-1/4 bg-white rounded-xl py-3 px-6 shadow-xl'>
+      <div className='mx-auto w-3/4 md:w-1/2 lg:w-1/4 xl:w-1/5 bg-white rounded-xl py-3 px-6 shadow-xl'>
         <Link to={'/'} className='block my-4'>
           <img className='w-32 mx-auto' src={logo} alt="Logo" />
         </Link>

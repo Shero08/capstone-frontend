@@ -98,7 +98,7 @@ const ProjectList = () => {
                         <tr className='border-none'>
                             <td colSpan={7} className='w-full'>
                                 <Pagination
-                                    handlePrevClick={handlePrevClick}
+                                    handlePrevClick={handlePrevClick} 
                                     handleNextClick={handleNextClick}
                                     totPages={totPages}
                                     currentPage={currentPage}
