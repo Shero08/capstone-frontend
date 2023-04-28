@@ -175,7 +175,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                                   id="editing"
                                   name="editing"
                                   type="checkbox"
-                                  value="Editing"
+                                  value="editing"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -198,7 +198,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                                   id="correzione-bozze"
                                   name="correzione-bozze"
                                   type="checkbox"
-                                  value="Correzione bozze"
+                                  value="correzione-bozze"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -221,7 +221,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                                   id="design-copertina"
                                   name="design-copertina"
                                   type="checkbox"
-                                  value="Design copertina"
+                                  value="design-copertina"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -244,7 +244,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                                   id="impaginazione"
                                   name="impaginazione"
                                   type="checkbox"
-                                  value="Impaginazione"
+                                  value="impaginazione"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -290,7 +290,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                                   id="traduzione"
                                   name="traduzione"
                                   type="checkbox"
-                                  value="Traduzione"
+                                  value="traduzione"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
@@ -313,7 +313,7 @@ const NewProjectModal = ({ isOpenModalNewProject, closeModalNewProject, isRefres
                                   id="promozione"
                                   name="promozione"
                                   type="checkbox"
-                                  value="Promozione"
+                                  value="promozione"
                                   onChange={handleChecked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />

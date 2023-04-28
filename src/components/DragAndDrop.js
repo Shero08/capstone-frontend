@@ -24,6 +24,9 @@ const DragAndDrop = ({ formData, onFormDataChange }) => {
       "image/png",
       "application/pdf",
       "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.ms-fontobject",
+      "application/vnd.oasis.opendocument.text"
     ];
 
     if (validImageTypes.includes(fileType)) {

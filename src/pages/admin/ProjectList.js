@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import useAxios from '../../hooks/useAxios';
+import useSession from '../../hooks/useSession';
 import { DocumentPlusIcon } from '@heroicons/react/24/outline';
 import SingleProjectRow from '../../components/SingleProjectRow';
 import Pagination from '../../components/Pagination';
@@ -8,10 +9,13 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 import NewProjectModal from '../../components/NewProjectModal';
 
 const ProjectList = () => {
+  const session = useSession()
+  const userSession = session && session?.userSession 
   const [isOpenModalNewProject, setIsOpenModalNewProject] = useState(false);
   const [totPages, setTotPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 10;
+  const author = userSession?.id
 
   const { data, loading, error, isRefresh } = useAxios({ url: `${process.env.REACT_APP_API_URL}/projects?page=${currentPage}&limit=${limit}`, headers: {}});
 
@@ -115,7 +119,8 @@ const ProjectList = () => {
                 isOpenModalNewProject={isOpenModalNewProject}
                 openModalNewProject={openModalNewProject}
                 closeModalNewProject={closeModalNewProject}
-                isRefresh={isRefresh}
+                isRefresh={isRefresh} 
+                author={author}
             />
         </main>
     </div>
