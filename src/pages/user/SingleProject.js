@@ -201,6 +201,7 @@ const SingleProject = () => {
           title={data.title}
           description={data.description}
           category={data.category}
+          status={data.status}
           id={_id}
           isRefresh={isRefresh}
         />

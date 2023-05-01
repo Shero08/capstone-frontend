@@ -6,7 +6,7 @@ import DragAndDrop from "./DragAndDrop";
 import useSession from '../hooks/useSession';
 import useAxios from '../hooks/useAxios';
 
-const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, id}) => {
+const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, title, description, status, id}) => {
   const toast = new HotToast();
   const [categoryData, setCategoryData] = useState([])
   const [formData, setFormData] = useState({});
@@ -67,8 +67,9 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
       setCategoryData(getDataCategory)
       setUpdatedCategory(getDataCategory)
     }
-    console.log(data.category);
+    console.log(data);
     console.log(updatedCategory);
+    console.log(formData);
   }, [data, formData])
 
   return (
@@ -154,6 +155,33 @@ const UpdateProjectModal = ({isOpenUpdate, closeUpdateProjectModal, isRefresh, t
                               })
                             }
                           />
+                        </div>
+                      </div>
+
+                      <div className="col-span-full">
+                        <div className="mt-2">
+                          <label htmlFor="project-desc" className="block text-sm font-medium leading-6 text-gray-900">
+                            Modifica stato progetto:
+                          </label>
+                          <select
+                            name="status"
+                            id="project-status"
+                            defaultValue={status}
+                            placeholder={status}
+                            required
+
+                            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                status: e.target.value,
+                              })
+                            }
+                          >
+                            <option value={'annullato'}>Annullato</option>
+                            <option value={'in lavorazione'}>In lavorazione</option>
+                            <option value={'completo'}>Completo</option>
+                          </select>
                         </div>
                       </div>
 
