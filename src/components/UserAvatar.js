@@ -8,13 +8,15 @@ const UserAvatar = () => {
   const [src, setSrc] = useState('');
   const session = useSession();
   const userSession = session && session?.userSession
+  const userToken = session && session?.userToken
 
   const id = userSession?.id
 
   const { data, loading, error } = useAxios({ url: `${process.env.REACT_APP_API_URL}/users/${id}`, headers: {}});
 
   const { patchData, patchError, patch } = usePatchAvatar({ url: `${process.env.REACT_APP_API_URL}/users/${id}/avatar`, headers: {
-    "Content-Type": "multipart/form-data"
+    "Content-Type": "multipart/form-data",
+    "Authorization": userToken
   }}); 
 
   const handleUpload = (e) => {
@@ -28,7 +30,7 @@ const UserAvatar = () => {
 
 
     setTimeout(() => {
-      //window.location.reload(); 
+      window.location.reload(); 
     }, 1000)
     });
 
