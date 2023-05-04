@@ -15,7 +15,7 @@ const UserAvatar = () => {
 
   const { patchData, patchError, patch } = usePatchAvatar({ url: `${process.env.REACT_APP_API_URL}/users/${id}/avatar`, headers: {
     "Content-Type": "multipart/form-data"
-  }});
+  }}); 
 
   const handleUpload = (e) => {
     e.preventDefault();  
@@ -28,11 +28,11 @@ const UserAvatar = () => {
 
 
     setTimeout(() => {
-      window.location.reload(); 
+      //window.location.reload(); 
     }, 1000)
     });
 
-    setSrc(patchData.fileName); //aggiungere dati al backend
+    setSrc(patchData.fileName);
     console.log(src); 
 
     if(patchError){
