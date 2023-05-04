@@ -33,7 +33,7 @@ const UserAvatar = () => {
     });
 
     setSrc(patchData.fileName); //aggiungere dati al backend
-    console.log(src);
+    console.log(src); 
 
     if(patchError){
       console.log(patchError)
